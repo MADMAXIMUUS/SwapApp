@@ -5,20 +5,32 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.runtime.CompositionLocalProvider
 
 private val DarkColorPalette = darkColors(
     primary = Dark_Bar,
-    primaryVariant= Dark_Bar,
-    surface= Dark_Background,
-    background = Dark_Background
+    primaryVariant = Dark_Bar,
+    surface = Dark_Content_Background,
+    onBackground = White,
+    secondary = Light_brown,
+    onSurface = White,
+    onSecondary = White,
+    background = Black,
+    error = Red,
+    onPrimary = White
 )
 
 private val LightColorPalette = lightColors(
-    primary = Color.White,
-    primaryVariant = Color.White,
-    background = Color.White,
-    surface = Color.White
+    primary = White,
+    primaryVariant = White,
+    background = White,
+    onBackground = Black,
+    surface = White,
+    onSurface = Black,
+    onPrimary = Deep_dark_blue,
+    onSecondary = White,
+    error = Red,
+    secondary = Light_brown
 )
 
 @Composable
@@ -29,10 +41,12 @@ fun SwapTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable (
         LightColorPalette
     }
 
-    MaterialTheme(
+    CompositionLocalProvider(LocalSpacing provides Spacing()) {
+        MaterialTheme(
             colors = colors,
             typography = Typography,
             shapes = Shapes,
             content = content
-    )
+        )
+    }
 }

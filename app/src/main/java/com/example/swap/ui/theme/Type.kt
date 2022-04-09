@@ -53,8 +53,8 @@ val Typography = Typography(
                 fontSize = 14.sp
         ),
         caption = TextStyle(
-                fontFamily = BlackerText,
-                fontWeight = FontWeight.Normal,
+                fontFamily = BlackerDisplay,
+                fontWeight = FontWeight.ExtraBold,
                 fontStyle = FontStyle.Normal,
                 fontSize = 12.sp
         ),
@@ -69,5 +69,11 @@ val Typography = Typography(
                 fontWeight = FontWeight.Normal,
                 fontStyle = FontStyle.Normal,
                 fontSize = 20.sp
+        ),
+        subtitle1 = TextStyle(
+                fontFamily = BlackerText,
+                fontWeight = FontWeight.Normal,
+                fontStyle = FontStyle.Normal,
+                fontSize = 14.sp
         )
 )

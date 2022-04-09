@@ -3,20 +3,32 @@ package com.example.swap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.layout.*
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import com.example.swap.chatscreen.ChatsScreen
+import com.example.swap.favoritescreen.FavoriteScreen
+import com.example.swap.homescreen.HomeScreen
+import com.example.swap.models.BillModel
+import com.example.swap.models.BottomNavItem
+import com.example.swap.profilescreen.ProfileScreen
+import com.example.swap.ui.theme.Light_brown
 import com.example.swap.ui.theme.SwapTheme
+import com.example.swap.ui.theme.Yellow
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,40 +42,195 @@ class MainActivity : ComponentActivity() {
 }
 
 @Preview(
-    name = "Main Activity",
+    name = "Main Activity Dark Mode",
     showSystemUi = true,
     showBackground = true,
-    backgroundColor = 0xffff
 )
 @Composable
 fun LoadMainUi() {
-    Column {
-        Image(
-            painterResource(
-                id = R.drawable.ic_new_launcher_foreground
-            ),
-            contentDescription = "content description",
-            modifier = Modifier.height(300.dp),
-            contentScale = ContentScale.Crop
-        )
-        Column(
-            modifier = Modifier.padding(16.dp)
-        ) {
-            Text(
-                text = "My cool app",
-                style = MaterialTheme.typography.h1
+    val navController = rememberNavController()
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = {
+                    Text(
+                        text = "Главная",
+                        style = MaterialTheme.typography.h1
+                    )
+                },
+                elevation = 7.dp,
+                actions = {
+                    Row {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_owl_search),
+                            contentDescription = "Filter and search",
+                            modifier = Modifier.size(40.dp),
+                            tint = Color.Unspecified
+                        )
+                        Spacer(modifier = Modifier.requiredWidth(12.dp))
+                    }
+                },
             )
-            Spacer(modifier = Modifier.padding(top = 10.dp))
-            Text(
-                text = "Another cool text",
-                style = MaterialTheme.typography.body1
+        },
+        content = {
+            Navigation(navController = navController)
+        },
+        bottomBar = {
+            BottomNavigationBar(
+                items = listOf(
+                    BottomNavItem(
+                        name = stringResource(R.string.bottom_menu_home),
+                        route = "home",
+                        icon = painterResource(id = R.drawable.ic_bottom_main)
+                    ),
+                    BottomNavItem(
+                        name = stringResource(R.string.bottom_menu_favorite),
+                        route = "favorite",
+                        icon = painterResource(id = R.drawable.ic_bottom_favorite)
+                    ),
+                    BottomNavItem(
+                        name = stringResource(R.string.bottom_menu_add),
+                        route = "add",
+                        icon = painterResource(id = R.drawable.ic_bottom_add)
+                    ),
+                    BottomNavItem(
+                        name = stringResource(R.string.bottom_menu_chats),
+                        route = "chats",
+                        icon = painterResource(id = R.drawable.ic_bottom_chats),
+                        badgeCount = 10
+                    ),
+                    BottomNavItem(
+                        name = stringResource(R.string.bottom_menu_profile),
+                        route = "profile",
+                        icon = painterResource(id = R.drawable.ic_bottom_profile)
+                    )
+                ),
+                navController = navController,
+                onItemClick = { item ->
+                    navController.navigate(item.route)
+                }
             )
-            Spacer(modifier = Modifier.padding(top = 10.dp))
-            Text(
-                text = "5$",
-                style = MaterialTheme.typography.caption
+        }
+    )
+}
+
+@Composable
+fun Navigation(navController: NavHostController) {
+    NavHost(navController = navController, startDestination = "home") {
+        composable("home") {
+            HomeScreen(
+                1,
+                listOf(
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать")
+                )
+            )
+        }
+        composable("favorite") {
+            FavoriteScreen()
+        }
+        composable("add") {
+            NewBillScreen()
+        }
+        composable("chats") {
+            ChatsScreen()
+        }
+        composable("profile") {
+            ProfileScreen()
+        }
+    }
+}
+
+@Composable
+fun BottomNavigationBar(
+    items: List<BottomNavItem>,
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    onItemClick: (BottomNavItem) -> Unit
+) {
+    val backStackEntry = navController.currentBackStackEntryAsState()
+    BottomNavigation(
+        modifier = modifier,
+        backgroundColor = MaterialTheme.colors.surface,
+        elevation = 7.dp
+    ) {
+        items.forEach { item ->
+            val selected = item.route == backStackEntry.value?.destination?.route
+            BottomNavigationItem(
+                selected = selected,
+                onClick = { onItemClick(item) },
+                selectedContentColor = Light_brown,
+                unselectedContentColor = Yellow,
+                alwaysShowLabel = true,
+                icon = {
+                    Column(horizontalAlignment = CenterHorizontally) {
+                        if (item.badgeCount > 0)
+                            if (item.badgeCount > 99) {
+                                BadgedBox(badge = {
+                                    Badge(
+                                        backgroundColor = MaterialTheme.colors.error,
+                                        modifier = Modifier.offset((-5).dp, 5.dp)
+                                    ) {
+                                        Text(
+                                            text = "99+",
+                                            modifier = Modifier.padding(1.5.dp),
+                                            color = Color.White
+                                        )
+                                    }
+                                }) {
+                                    Icon(
+                                        painter = item.icon,
+                                        contentDescription = item.name,
+                                        modifier = Modifier.size(25.dp)
+                                    )
+                                }
+                            } else {
+                                BadgedBox(badge = {
+                                    Badge(
+                                        backgroundColor = MaterialTheme.colors.error,
+                                        modifier = Modifier.offset((-5).dp, 5.dp)
+                                    ) {
+                                        Text(
+                                            text = item.badgeCount.toString(),
+                                            modifier = Modifier.padding(1.5.dp),
+                                            color = Color.White
+                                        )
+                                    }
+                                }) {
+                                    Icon(
+                                        painter = item.icon,
+                                        contentDescription = item.name,
+                                        modifier = Modifier.size(25.dp)
+                                    )
+                                }
+                            }
+                        else {
+                            Icon(
+                                painter = item.icon,
+                                contentDescription = item.name,
+                                modifier = Modifier.size(25.dp)
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = item.name,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                }
             )
         }
     }
-
 }
