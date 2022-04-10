@@ -6,6 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -49,12 +51,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoadMainUi() {
     val navController = rememberNavController()
+    val mode = remember {
+        mutableStateOf(false)
+    }
+    val currentScreen = remember { mutableStateOf("Home") }
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(
-                        text = "Главная",
+                        text = currentScreen.value,
                         style = MaterialTheme.typography.h1
                     )
                 },
@@ -73,41 +79,46 @@ fun LoadMainUi() {
             )
         },
         content = {
-            Navigation(navController = navController)
+            Navigation(navController = navController, mode = mode.value)
         },
         bottomBar = {
             BottomNavigationBar(
                 items = listOf(
                     BottomNavItem(
                         name = stringResource(R.string.bottom_menu_home),
-                        route = "home",
+                        route = "Home",
                         icon = painterResource(id = R.drawable.ic_bottom_main)
                     ),
                     BottomNavItem(
                         name = stringResource(R.string.bottom_menu_favorite),
-                        route = "favorite",
+                        route = "Favorite",
                         icon = painterResource(id = R.drawable.ic_bottom_favorite)
                     ),
                     BottomNavItem(
                         name = stringResource(R.string.bottom_menu_add),
-                        route = "add",
+                        route = "Add",
                         icon = painterResource(id = R.drawable.ic_bottom_add)
                     ),
                     BottomNavItem(
                         name = stringResource(R.string.bottom_menu_chats),
-                        route = "chats",
+                        route = "Chats",
                         icon = painterResource(id = R.drawable.ic_bottom_chats),
                         badgeCount = 10
                     ),
                     BottomNavItem(
                         name = stringResource(R.string.bottom_menu_profile),
-                        route = "profile",
+                        route = "Profile",
                         icon = painterResource(id = R.drawable.ic_bottom_profile)
                     )
                 ),
                 navController = navController,
                 onItemClick = { item ->
                     navController.navigate(item.route)
+                    if (currentScreen.value == "Home"
+                        && navController.currentDestination?.route == "Home"
+                    )
+                        mode.value = !mode.value
+                    currentScreen.value = item.route
                 }
             )
         }
@@ -115,12 +126,21 @@ fun LoadMainUi() {
 }
 
 @Composable
-fun Navigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "home") {
-        composable("home") {
+fun Navigation(
+    mode: Boolean,
+    navController: NavHostController
+) {
+    NavHost(
+        navController = navController,
+        startDestination = "Home",
+        modifier = Modifier
+            .padding(0.dp, 0.dp, 0.dp, 55.dp)
+    ) {
+        composable("Home") {
             HomeScreen(
-                1,
+                mode,
                 listOf(
+                    BillModel("00", "Подушка", "Хорошая подушка надо брать"),
                     BillModel("00", "Подушка", "Хорошая подушка надо брать"),
                     BillModel("00", "Подушка", "Хорошая подушка надо брать"),
                     BillModel("00", "Подушка", "Хорошая подушка надо брать"),
@@ -138,16 +158,16 @@ fun Navigation(navController: NavHostController) {
                 )
             )
         }
-        composable("favorite") {
+        composable("Favorite") {
             FavoriteScreen()
         }
-        composable("add") {
+        composable("Add") {
             NewBillScreen()
         }
-        composable("chats") {
+        composable("Chats") {
             ChatsScreen()
         }
-        composable("profile") {
+        composable("Profile") {
             ProfileScreen()
         }
     }

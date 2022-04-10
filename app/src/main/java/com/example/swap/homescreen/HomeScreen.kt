@@ -1,5 +1,3 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.example.swap.homescreen
 
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -21,9 +19,13 @@ import androidx.compose.ui.unit.dp
 import com.example.swap.R
 import com.example.swap.models.BillModel
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HomeScreen(mode: Int, bills: List<BillModel>) {
-    if (mode == 0) {
+fun HomeScreen(
+    mode: Boolean,
+    bills: List<BillModel>
+) {
+    if (!mode) {
         LazyVerticalGrid(
             cells = GridCells.Fixed(2),
             modifier = Modifier.fillMaxSize(),
@@ -48,13 +50,13 @@ fun HomeScreen(mode: Int, bills: List<BillModel>) {
 @Preview
 @Composable
 fun ItemPreview() {
-    HomeLineItem(BillModel("10100", "Подушка", "Хоррошая подушка, надо брать"))
+    HomeSmallItem(BillModel("10100", "Подушка", "Хоррошая подушка, надо брать"))
 }
 
 @Composable
 fun HomeSmallItem(bill: BillModel) {
     Card(
-        elevation = 5.dp,
+        elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .fillMaxWidth()
@@ -86,7 +88,7 @@ fun HomeSmallItem(bill: BillModel) {
 @Composable
 fun HomeLineItem(bill: BillModel) {
     Card(
-        elevation = 5.dp,
+        elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .fillMaxWidth()
