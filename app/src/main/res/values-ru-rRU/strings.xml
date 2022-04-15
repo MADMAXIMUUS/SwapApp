@@ -3,7 +3,12 @@
     <string name="app_name">Поменяйка</string>
     <string name="bottom_menu_home">Главная</string>
     <string name="bottom_menu_favorite">Избранное</string>
-    <string name="bottom_menu_add">Создать</string>
+    <string name="bottom_menu_bills">Объявления</string>
     <string name="bottom_menu_chats">Чаты</string>
     <string name="bottom_menu_profile">Профиль</string>
+    <string name="dont_have_drafts_message">У вас нет объявлений в черновиках</string>
+    <string name="product_photo">Фотография продукта</string>
+    <string name="create_bill_button">Создать объявление</string>
+    <string name="drafts">Черновики</string>
+    <string name="dont_added_bill_to_favorites">Вы еще не добавили объявления в избранное</string>
 </resources>

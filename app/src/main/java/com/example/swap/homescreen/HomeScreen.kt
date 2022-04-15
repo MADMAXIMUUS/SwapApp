@@ -13,7 +13,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.swap.R
@@ -50,7 +52,7 @@ fun HomeScreen(
 @Preview
 @Composable
 fun ItemPreview() {
-    HomeSmallItem(BillModel("10100", "Подушка", "Хоррошая подушка, надо брать"))
+    HomeLineItem(BillModel("10100", "Подушка", "Хоррошая подушка, надо брать"))
 }
 
 @Composable
@@ -65,20 +67,25 @@ fun HomeSmallItem(bill: BillModel) {
         Column(
             modifier = Modifier
                 .height(200.dp)
+                .offset(0.dp,10.dp)
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_owl_search),
-                contentDescription = "Фотография продукта",
-                modifier = Modifier.clip(shape = RoundedCornerShape(6.dp))
+                contentDescription = stringResource(R.string.product_photo),
+                modifier = Modifier
+                    .clip(shape = RoundedCornerShape(6.dp))
+                    .height(90.dp)
+                    .fillMaxWidth(),
+                contentScale = ContentScale.FillBounds
             )
             Text(
                 text = bill.title,
                 style = MaterialTheme.typography.h2,
-                modifier = Modifier.offset(10.dp, 0.dp)
+                modifier = Modifier.offset(10.dp, 5.dp)
             )
             Text(
                 text = bill.description,
-                Modifier.padding(10.dp, 0.dp, 10.dp, 10.dp),
+                Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
                 style = MaterialTheme.typography.subtitle1
             )
         }
@@ -92,17 +99,17 @@ fun HomeLineItem(bill: BillModel) {
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
             .fillMaxWidth()
+            .height(150.dp)
             .padding(10.dp)
     ) {
         Row(modifier = Modifier.height(100.dp)) {
             Image(
                 painter = painterResource(id = R.drawable.ic_owl_search),
-                contentDescription = "Фотография продукта",
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(10.dp))
-                    .padding(10.dp)
+                contentDescription = stringResource(R.string.product_photo),
+                contentScale = ContentScale.FillBounds,
+                modifier = Modifier.height(110.dp).width(110.dp).offset(10.dp,10.dp)
             )
-            Column {
+            Column(modifier = Modifier.offset(20.dp,20.dp)) {
                 Text(
                     text = bill.title,
                     style = MaterialTheme.typography.h2,

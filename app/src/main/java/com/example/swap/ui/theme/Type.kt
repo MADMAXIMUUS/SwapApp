@@ -50,7 +50,7 @@ val Typography = Typography(
                 fontFamily = BlackerDisplay,
                 fontWeight = FontWeight.ExtraBold,
                 fontStyle = FontStyle.Normal,
-                fontSize = 14.sp
+                fontSize = 16.sp
         ),
         caption = TextStyle(
                 fontFamily = BlackerDisplay,

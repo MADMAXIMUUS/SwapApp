@@ -16,6 +16,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -26,6 +27,7 @@ import com.example.swap.favoritescreen.FavoriteScreen
 import com.example.swap.homescreen.HomeScreen
 import com.example.swap.models.BillModel
 import com.example.swap.models.BottomNavItem
+import com.example.swap.newbillscreen.NewBillScreen
 import com.example.swap.profilescreen.ProfileScreen
 import com.example.swap.ui.theme.Light_brown
 import com.example.swap.ui.theme.SwapTheme
@@ -44,7 +46,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Preview(
-    name = "Main Activity Dark Mode",
+    name = "Main Activity",
     showSystemUi = true,
     showBackground = true,
 )
@@ -95,8 +97,8 @@ fun LoadMainUi() {
                         icon = painterResource(id = R.drawable.ic_bottom_favorite)
                     ),
                     BottomNavItem(
-                        name = stringResource(R.string.bottom_menu_add),
-                        route = "Add",
+                        name = stringResource(R.string.bottom_menu_bills),
+                        route = "Bills",
                         icon = painterResource(id = R.drawable.ic_bottom_add)
                     ),
                     BottomNavItem(
@@ -114,11 +116,11 @@ fun LoadMainUi() {
                 navController = navController,
                 onItemClick = { item ->
                     navController.navigate(item.route)
-                    if (currentScreen.value == "Home"
+                    if ((currentScreen.value == "Home" || currentScreen.value == "Главная")
                         && navController.currentDestination?.route == "Home"
                     )
                         mode.value = !mode.value
-                    currentScreen.value = item.route
+                    currentScreen.value = item.name
                 }
             )
         }
@@ -159,10 +161,10 @@ fun Navigation(
             )
         }
         composable("Favorite") {
-            FavoriteScreen()
+            FavoriteScreen(listOf())
         }
-        composable("Add") {
-            NewBillScreen()
+        composable("Bills") {
+            NewBillScreen(listOf())
         }
         composable("Chats") {
             ChatsScreen()
@@ -246,6 +248,7 @@ fun BottomNavigationBar(
                         Spacer(modifier = Modifier.height(2.dp))
                         Text(
                             text = item.name,
+                            fontSize = 12.sp,
                             fontWeight = FontWeight.Medium
                         )
                     }

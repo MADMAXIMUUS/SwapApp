@@ -2,7 +2,12 @@
     <string name="app_name">Swap</string>
     <string name="bottom_menu_home">Home</string>
     <string name="bottom_menu_favorite">Favorite</string>
-    <string name="bottom_menu_add">Add</string>
+    <string name="bottom_menu_bills">Bills</string>
     <string name="bottom_menu_chats">Chats</string>
     <string name="bottom_menu_profile">Profile</string>
+    <string name="dont_have_drafts_message">You don\'t have draft bill</string>
+    <string name="product_photo">Product photo</string>
+    <string name="create_bill_button">Create bill</string>
+    <string name="drafts">Drafts</string>
+    <string name="dont_added_bill_to_favorites">You have not added bill to your favorites yet</string>
 </resources>
