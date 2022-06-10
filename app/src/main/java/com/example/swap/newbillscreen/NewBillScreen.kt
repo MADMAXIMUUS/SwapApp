@@ -1,149 +1,223 @@
 package com.example.swap.newbillscreen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardCapitalization
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.swap.R
-import com.example.swap.models.BillModel
+import com.example.swap.ui.theme.Dark_Background
+import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Light_brown
+import com.example.swap.ui.theme.Yellow
+import com.example.swap.utilities.HideKeyboard
 
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NewBillScreen(drafts: List<BillModel>) {
-    if (drafts.isNotEmpty()) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-        ) {
-            Text(
-                text = stringResource(R.string.drafts),
-                modifier = Modifier
-                    .offset(20.dp, 3.dp)
-                    .padding(2.dp),
-                style = MaterialTheme.typography.h3
-            )
-            LazyVerticalGrid(
-                cells = GridCells.Fixed(2),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .weight(0.7f),
-            ) {
-                items(drafts.size) { id ->
-                    DraftItem(bill = drafts[id])
-                }
+fun NewBillScreen(navController: NavController) {
+    HideKeyboard()
+    val billTitle = remember { mutableStateOf("") }
+    val billDescription = remember { mutableStateOf("") }
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
+        LazyRow {
+            item {
+                AddPhotoCard()
             }
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(20.dp)
-            ) {
-                Button(
-                    onClick = { },
-                    colors = ButtonDefaults
-                        .buttonColors(
-                            backgroundColor = Light_brown
-                        ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .clip(shape = RoundedCornerShape(10.dp))
-                ) {
-                    Text(text = stringResource(R.string.create_bill_button))
-                }
+            items(5) {
+                PhotoCard()
             }
         }
-    } else {
-        Column(
+        Spacer(modifier = Modifier.height(20.dp))
+        OutlinedTextField(
             modifier = Modifier
-                .fillMaxSize()
-        ) {
-            Text(
-                text = stringResource(R.string.drafts),
-                modifier = Modifier
-                    .offset(20.dp, 3.dp)
-                    .padding(2.dp),
-                style = MaterialTheme.typography.h3
-            )
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.7f),
-                contentAlignment = Alignment.Center
-            ) {
+                .height(70.dp)
+                .fillMaxWidth(),
+            value = billTitle.value,
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = if (isSystemInDarkTheme()) {
+                    Color.White
+                } else {
+                    Deep_dark_blue
+                },
+                backgroundColor = if (isSystemInDarkTheme()) {
+                    Color(0xFF323232)
+                } else {
+                    Color.White
+                },
+                placeholderColor = if (isSystemInDarkTheme()) {
+                    Color.White
+                } else {
+                    Deep_dark_blue
+                },
+                focusedIndicatorColor = if (isSystemInDarkTheme()) {
+                    Yellow
+                } else {
+                    Deep_dark_blue
+                },
+                unfocusedIndicatorColor = if (isSystemInDarkTheme()) {
+                    Color(0xFF323232)
+                } else {
+                    Color.LightGray
+                }
+            ),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true
+            ),
+            textStyle = MaterialTheme.typography.h2,
+            singleLine = true,
+            onValueChange = {
+                billTitle.value = it
+            },
+            placeholder = {
                 Text(
-                    text = stringResource(R.string.dont_have_drafts_message),
-                    style = MaterialTheme.typography.h1
+                    text = stringResource(id = R.string.new_bill_enter_name_hint),
+                    fontSize = 22.sp
                 )
             }
-            Box(
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        OutlinedTextField(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.7f),
+            value = billDescription.value,
+            shape = RoundedCornerShape(10.dp),
+            colors = TextFieldDefaults.textFieldColors(
+                textColor = if (isSystemInDarkTheme()) {
+                    Color.White
+                } else {
+                    Deep_dark_blue
+                },
+                backgroundColor = if (isSystemInDarkTheme()) {
+                    Color(0xFF323232)
+                } else {
+                    Color.White
+                },
+                placeholderColor = if (isSystemInDarkTheme()) {
+                    Color.White
+                } else {
+                    Deep_dark_blue
+                },
+                focusedIndicatorColor = if (isSystemInDarkTheme()) {
+                    Yellow
+                } else {
+                    Deep_dark_blue
+                },
+                unfocusedIndicatorColor = if (isSystemInDarkTheme()) {
+                    Color(0xFF323232)
+                } else {
+                    Color.LightGray
+                }
+            ),
+            keyboardOptions = KeyboardOptions(
+                keyboardType = KeyboardType.Text,
+                capitalization = KeyboardCapitalization.Sentences,
+                autoCorrect = true
+            ),
+            textStyle = MaterialTheme.typography.body1,
+            singleLine = false,
+            onValueChange = {
+                billDescription.value = it
+            },
+            placeholder = {
+                Text(
+                    text = stringResource(id = R.string.new_bill_enter_description_hint),
+                    fontSize = 20.sp
+                )
+            }
+        )
+        Spacer(modifier = Modifier.height(20.dp))
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(0.dp)
+        ) {
+            Button(
+                onClick = { navController.navigate("home") },
+                colors = ButtonDefaults
+                    .buttonColors(
+                        backgroundColor = Light_brown
+                    ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(20.dp),
+                    .height(60.dp)
+                    .clip(shape = RoundedCornerShape(10.dp))
             ) {
-                Button(
-                    onClick = { },
-                    colors = ButtonDefaults
-                        .buttonColors(
-                            backgroundColor = Light_brown
-                        ),
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp)
-                        .clip(shape = RoundedCornerShape(10.dp))
-                ) {
-                    Text(text = stringResource(R.string.create_bill_button),
-                    style = MaterialTheme.typography.h2)
-                }
+                Text(
+                    text = stringResource(R.string.create_bill_button),
+                    style = MaterialTheme.typography.button,
+                    color = if (isSystemInDarkTheme()) {
+                        Dark_Background
+                    } else {
+                        Color.White
+                    }
+                )
             }
         }
     }
 }
 
 @Composable
-fun DraftItem(bill: BillModel) {
+fun PhotoCard() {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(10.dp)
+            .width(200.dp)
+            .height(200.dp)
+            .padding(5.dp, 0.dp, 5.dp, 0.dp)
+    ) {
+
+    }
+}
+
+@Composable
+fun AddPhotoCard() {
+    Card(
+        elevation = 3.dp,
+        shape = RoundedCornerShape(10.dp),
+        modifier = Modifier
+            .width(200.dp)
+            .height(200.dp)
+            .padding(1.dp, 0.dp, 5.dp, 0.dp)
     ) {
         Column(
-            modifier = Modifier
-                .height(200.dp)
-                .offset(0.dp, 10.dp)
+            modifier = Modifier.fillMaxSize(),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.ic_owl_search),
-                contentDescription = stringResource(R.string.product_photo),
+            Icon(
+                painter = painterResource(id = R.drawable.ic_change_photo_big),
+                contentDescription = "Add photo button icon",
                 modifier = Modifier
-                    .clip(shape = RoundedCornerShape(6.dp))
-                    .height(90.dp)
-                    .fillMaxWidth(),
-                contentScale = ContentScale.FillBounds
+                    .height(50.dp)
+                    .width(40.dp)
             )
             Text(
-                text = bill.title,
-                style = MaterialTheme.typography.h2,
-                modifier = Modifier.offset(10.dp, 0.dp)
-            )
-            Text(
-                text = bill.description,
-                Modifier.padding(10.dp, 0.dp, 10.dp, 10.dp),
-                style = MaterialTheme.typography.subtitle1
+                text = stringResource(R.string.add_photo),
+                style = MaterialTheme.typography.h3
             )
         }
     }

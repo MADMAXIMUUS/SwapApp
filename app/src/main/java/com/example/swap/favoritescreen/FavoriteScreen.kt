@@ -1,7 +1,7 @@
 package com.example.swap.favoritescreen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,24 +11,28 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.swap.R
-import com.example.swap.models.BillModel
+import com.example.swap.ui.theme.Deep_dark_blue
+import com.example.swap.ui.theme.Night_blue
+import com.example.swap.utilities.HideKeyboard
+import com.lopatasoftware.swap.data.remote.responses.Bill
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun FavoriteScreen(
-    bills: List<BillModel>
+    bills: List<Bill>
 ) {
+    HideKeyboard()
     if (bills.isNotEmpty()) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(0.dp, 0.dp, 0.dp, 60.dp)
         ) {
             items(bills.size) { id ->
                 FavoriteItem(bill = bills[id])
@@ -44,20 +48,14 @@ fun FavoriteScreen(
             Text(
                 text = stringResource(R.string.dont_added_bill_to_favorites),
                 textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.h1
+                style = MaterialTheme.typography.body1
             )
         }
     }
 }
 
-@Preview
 @Composable
-fun ItemPreview() {
-    FavoriteItem(BillModel("10100", "Подушка", "Хоррошая подушка, надо брать"))
-}
-
-@Composable
-fun FavoriteItem(bill: BillModel) {
+fun FavoriteItem(bill: Bill) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
@@ -80,15 +78,24 @@ fun FavoriteItem(bill: BillModel) {
                 Text(
                     text = bill.title,
                     style = MaterialTheme.typography.h2,
-                    modifier = Modifier.offset(10.dp, 0.dp)
+                    modifier = Modifier.offset(10.dp, 0.dp),
+                    color = if (isSystemInDarkTheme()) {
+                        Color.White
+                    } else {
+                        Deep_dark_blue
+                    }
                 )
                 Text(
                     text = bill.description,
                     Modifier.padding(10.dp, 0.dp, 10.dp, 10.dp),
-                    style = MaterialTheme.typography.subtitle1
+                    style = MaterialTheme.typography.body2,
+                    color = if (isSystemInDarkTheme()) {
+                        Color(0xFFC4C4C2)
+                    } else {
+                        Night_blue
+                    }
                 )
             }
-
         }
     }
 }

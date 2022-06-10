@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Swap</string>
+    <string name="app_name" translatable="false">Swap</string>
     <string name="bottom_menu_home">Home</string>
     <string name="bottom_menu_favorite">Favorite</string>
     <string name="bottom_menu_bills">Bills</string>
@@ -10,4 +10,22 @@
     <string name="create_bill_button">Create bill</string>
     <string name="drafts">Drafts</string>
     <string name="dont_added_bill_to_favorites">You have not added bill to your favorites yet</string>
+    <string name="new_bill">New bill</string>
+    <string name="add_photo">Add photo</string>
+    <string name="new_bill_enter_name_hint">Enter tittle</string>
+    <string name="new_bill_enter_description_hint">Enter description</string>
+    <string name="profile_screen_message">Login or register to enjoy all features</string>
+    <string name="register_title">Register</string>
+    <string name="log_in_title">Log In</string>
+    <string name="email_title">Email</string>
+    <string name="name_title">Name</string>
+    <string name="already_have_account">Already have an account?</string>
+    <string name="log_in_title_2">Log In</string>
+    <string name="password_title">Password</string>
+    <string name="register_picture">Register picture</string>
+    <string name="log_in_picture">Login picture</string>
+    <string name="log_in_title_3">Log In</string>
+    <string name="Sig_in_title">Sign In!</string>
+    <string name="dont_have_account">Don’t have an account?</string>
+    <string name="log_in_title_4">Log In</string>
 </resources>

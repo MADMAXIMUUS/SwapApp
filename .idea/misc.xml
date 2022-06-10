@@ -5,6 +5,9 @@
       <map>
         <entry key="..\:/MAI/Swap/SwapAndroidApp/app/src/main/res/drawable/ic_launcher_new_foreground.xml" value="0.174" />
         <entry key="..\:/MAI/Swap/SwapAndroidApp/app/src/main/res/mipmap-anydpi-v26/ic_test_icon.xml" value="0.12" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable-v24/change_password.xml" value="0.142" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.142" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/change_password.xml" value="0.142" />
       </map>
     </option>
   </component>

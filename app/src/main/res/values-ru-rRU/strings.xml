@@ -1,6 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Поменяйка</string>
     <string name="bottom_menu_home">Главная</string>
     <string name="bottom_menu_favorite">Избранное</string>
     <string name="bottom_menu_bills">Объявления</string>
@@ -11,4 +9,22 @@
     <string name="create_bill_button">Создать объявление</string>
     <string name="drafts">Черновики</string>
     <string name="dont_added_bill_to_favorites">Вы еще не добавили объявления в избранное</string>
+    <string name="new_bill">Новое объявление</string>
+    <string name="add_photo">Добавить фото</string>
+    <string name="new_bill_enter_name_hint">Название</string>
+    <string name="new_bill_enter_description_hint">Описание</string>
+    <string name="profile_screen_message">Войдите или зарегистрируйтесь, чтобы пользоваться всеми функциями</string>
+    <string name="register_title">Регистрация</string>
+    <string name="log_in_title">Войти</string>
+    <string name="already_have_account">Уже есть аккаунт?</string>
+    <string name="log_in_title_2">Войдите!</string>
+    <string name="password_title">Пароль</string>
+    <string name="register_picture">Иллюстрация регистрации</string>
+    <string name="log_in_picture">Иллюстрация входа в аккаунт</string>
+    <string name="email_title">Почта</string>
+    <string name="name_title">Имя</string>
+    <string name="log_in_title_3">Вход</string>
+    <string name="Sig_in_title">Зарегистрируйтесь!</string>
+    <string name="dont_have_account">Еще нет аккаунта?</string>
+    <string name="log_in_title_4">Войти</string>
 </resources>
