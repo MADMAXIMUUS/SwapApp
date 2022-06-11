@@ -24,13 +24,13 @@ import com.example.swap.R
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
 import com.example.swap.utilities.HideKeyboard
-import com.lopatasoftware.swap.data.remote.responses.Bill
+import com.example.swap.domain.models.Advert
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     mode: Boolean,
-    bills: List<Bill>
+    adverts: List<Advert>
 ) {
     HideKeyboard()
     if (!mode) {
@@ -40,8 +40,8 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(0.dp, 0.dp, 0.dp, 55.dp),
         ) {
-            items(bills.size) { id ->
-                HomeSmallItem(bill = bills[id])
+            items(adverts.size) { id ->
+                HomeSmallItem(advert = adverts[id])
 
             }
         }
@@ -51,15 +51,15 @@ fun HomeScreen(
                 .fillMaxSize()
                 .padding(0.dp, 0.dp, 0.dp, 55.dp)
         ) {
-            items(bills.size) { id ->
-                HomeLineItem(bill = bills[id])
+            items(adverts.size) { id ->
+                HomeLineItem(advert = adverts[id])
             }
         }
     }
 }
 
 @Composable
-fun HomeSmallItem(bill: Bill) {
+fun HomeSmallItem(advert: Advert) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
@@ -82,7 +82,7 @@ fun HomeSmallItem(bill: Bill) {
                 contentScale = ContentScale.FillBounds
             )
             Text(
-                text = bill.title,
+                text = advert.title,
                 style = MaterialTheme.typography.h2,
                 modifier = Modifier.offset(10.dp, 5.dp),
                 color = if (isSystemInDarkTheme()) {
@@ -92,7 +92,7 @@ fun HomeSmallItem(bill: Bill) {
                 }
             )
             Text(
-                text = bill.description,
+                text = advert.description,
                 Modifier.padding(10.dp, 5.dp, 10.dp, 10.dp),
                 style = MaterialTheme.typography.body2,
                 color = if (isSystemInDarkTheme()) {
@@ -107,7 +107,7 @@ fun HomeSmallItem(bill: Bill) {
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun HomeLineItem(bill: Bill) {
+fun HomeLineItem(advert: Advert) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
@@ -131,7 +131,7 @@ fun HomeLineItem(bill: Bill) {
             )
             Column(modifier = Modifier.offset(20.dp,20.dp)) {
                 Text(
-                    text = bill.title,
+                    text = advert.title,
                     style = MaterialTheme.typography.h2,
                     modifier = Modifier.offset(10.dp, 0.dp),
                     color = if (isSystemInDarkTheme()) {
@@ -141,7 +141,7 @@ fun HomeLineItem(bill: Bill) {
                     }
                 )
                 Text(
-                    text = bill.description,
+                    text = advert.description,
                     Modifier.padding(10.dp, 0.dp, 10.dp, 10.dp),
                     style = MaterialTheme.typography.body2,
                     color = if (isSystemInDarkTheme()) {

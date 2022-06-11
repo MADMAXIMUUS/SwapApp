@@ -21,21 +21,21 @@ import com.example.swap.R
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
 import com.example.swap.utilities.HideKeyboard
-import com.lopatasoftware.swap.data.remote.responses.Bill
+import com.example.swap.domain.models.Advert
 
 @Composable
 fun FavoriteScreen(
-    bills: List<Bill>
+    adverts: List<Advert>
 ) {
     HideKeyboard()
-    if (bills.isNotEmpty()) {
+    if (adverts.isNotEmpty()) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(0.dp, 0.dp, 0.dp, 60.dp)
         ) {
-            items(bills.size) { id ->
-                FavoriteItem(bill = bills[id])
+            items(adverts.size) { id ->
+                FavoriteItem(advert = adverts[id])
             }
         }
     } else {
@@ -55,7 +55,7 @@ fun FavoriteScreen(
 }
 
 @Composable
-fun FavoriteItem(bill: Bill) {
+fun FavoriteItem(advert: Advert) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
@@ -76,7 +76,7 @@ fun FavoriteItem(bill: Bill) {
             )
             Column(modifier = Modifier.offset(20.dp, 20.dp)) {
                 Text(
-                    text = bill.title,
+                    text = advert.title,
                     style = MaterialTheme.typography.h2,
                     modifier = Modifier.offset(10.dp, 0.dp),
                     color = if (isSystemInDarkTheme()) {
@@ -86,7 +86,7 @@ fun FavoriteItem(bill: Bill) {
                     }
                 )
                 Text(
-                    text = bill.description,
+                    text = advert.description,
                     Modifier.padding(10.dp, 0.dp, 10.dp, 10.dp),
                     style = MaterialTheme.typography.body2,
                     color = if (isSystemInDarkTheme()) {

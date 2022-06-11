@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.swap.R
 import androidx.navigation.NavController
-import com.example.swap.models.ChatModel
+import com.example.swap.domain.models.Chat
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
 import com.example.swap.ui.theme.White
@@ -32,7 +32,7 @@ import com.example.swap.utilities.HideKeyboard
 
 @Composable
 fun ChatsScreen(
-    chats: List<ChatModel>,
+    chats: List<Chat>,
     navController: NavController
 ) {
     HideKeyboard()
@@ -49,7 +49,7 @@ fun ChatsScreen(
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatItem(chat: ChatModel, navController: NavController) {
+fun ChatItem(chat: Chat, navController: NavController) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),

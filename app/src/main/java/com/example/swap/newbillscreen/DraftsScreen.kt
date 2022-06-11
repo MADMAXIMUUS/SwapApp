@@ -21,11 +21,11 @@ import androidx.navigation.NavController
 import com.example.swap.R
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
-import com.lopatasoftware.swap.data.remote.responses.Bill
+import com.example.swap.domain.models.Advert
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DraftsScreen(drafts: List<Bill>, navController: NavController) {
+fun DraftsScreen(drafts: List<Advert>, navController: NavController) {
     HideKeyboard()
     Column(
         modifier = Modifier
@@ -52,7 +52,7 @@ fun DraftsScreen(drafts: List<Bill>, navController: NavController) {
                     .weight(0.7f),
             ) {
                 items(drafts.size) { id ->
-                    DraftItem(bill = drafts[id])
+                    DraftItem(advert = drafts[id])
                 }
             }
         } else {
@@ -98,7 +98,7 @@ fun DraftsScreen(drafts: List<Bill>, navController: NavController) {
 }
 
 @Composable
-fun DraftItem(bill: Bill) {
+fun DraftItem(advert: Advert) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
@@ -121,7 +121,7 @@ fun DraftItem(bill: Bill) {
                 contentScale = ContentScale.FillBounds
             )
             Text(
-                text = bill.title,
+                text = advert.title,
                 style = MaterialTheme.typography.h2,
                 modifier = Modifier.offset(10.dp, 0.dp),
                 color = if (isSystemInDarkTheme()) {
@@ -131,7 +131,7 @@ fun DraftItem(bill: Bill) {
                 }
             )
             Text(
-                text = bill.description,
+                text = advert.description,
                 modifier = Modifier.padding(10.dp, 0.dp, 10.dp, 10.dp),
                 style = MaterialTheme.typography.body2,
                 color = if (isSystemInDarkTheme()) {

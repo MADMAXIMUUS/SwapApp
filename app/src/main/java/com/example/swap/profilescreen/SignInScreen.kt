@@ -181,8 +181,8 @@ fun SignInScreen(navController: NavController) {
                         }
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Email,
+                        capitalization = KeyboardCapitalization.None,
                         autoCorrect = true
                     ),
                     textStyle = MaterialTheme.typography.h2,
@@ -237,8 +237,8 @@ fun SignInScreen(navController: NavController) {
                         }
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Password,
+                        capitalization = KeyboardCapitalization.None,
                         autoCorrect = true
                     ),
                     textStyle = MaterialTheme.typography.h2,

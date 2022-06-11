@@ -82,7 +82,7 @@ fun LogInScreen(navController: NavController) {
                 bottom.linkTo(buttonBox.top, 20.dp)
             }
         ) {
-            Column() {
+            Column {
                 OutlinedTextField(
                     modifier = Modifier
                         .height(75.dp)
@@ -122,8 +122,8 @@ fun LogInScreen(navController: NavController) {
                         }
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Email,
+                        capitalization = KeyboardCapitalization.None,
                         autoCorrect = true
                     ),
                     textStyle = MaterialTheme.typography.h2,
@@ -178,8 +178,8 @@ fun LogInScreen(navController: NavController) {
                         }
                     ),
                     keyboardOptions = KeyboardOptions(
-                        keyboardType = KeyboardType.Text,
-                        capitalization = KeyboardCapitalization.Sentences,
+                        keyboardType = KeyboardType.Password,
+                        capitalization = KeyboardCapitalization.None,
                         autoCorrect = true
                     ),
                     textStyle = MaterialTheme.typography.h2,
