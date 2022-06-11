@@ -83,7 +83,7 @@ fun ChatItem(chat: Chat, navController: NavController) {
                     .weight(0.7f)
             ) {
                 Text(
-                    text = chat.from,
+                    text = "Исмаил"/*chat.companionId*/,
                     style = MaterialTheme.typography.h2,
                     modifier = Modifier.offset(10.dp, 0.dp),
                     color = if (isSystemInDarkTheme()) {
@@ -113,7 +113,7 @@ fun ChatItem(chat: Chat, navController: NavController) {
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(
-                            if (chat.unReadMessage < 99) {
+                            if (chat.unreadMessageCount < 99) {
                                 DpSize(30.dp, 30.dp)
                             } else {
                                 DpSize(40.dp, 30.dp)
@@ -130,7 +130,7 @@ fun ChatItem(chat: Chat, navController: NavController) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = chat.unReadMessage.toString(),
+                        text = chat.unreadMessageCount.toString(),
                         fontSize = 18.sp,
                         color = if (isSystemInDarkTheme()) {
                             White
