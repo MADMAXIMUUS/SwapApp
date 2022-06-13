@@ -1,14 +1,14 @@
 <resources>
     <string name="bottom_menu_home">Главная</string>
     <string name="bottom_menu_favorite">Избранное</string>
-    <string name="bottom_menu_bills">Объявления</string>
+    <string name="bottom_menu_adverts">Объявления</string>
     <string name="bottom_menu_chats">Чаты</string>
     <string name="bottom_menu_profile">Профиль</string>
     <string name="dont_have_drafts_message">У вас нет объявлений в черновиках</string>
     <string name="product_photo">Фотография продукта</string>
-    <string name="create_bill_button">Создать объявление</string>
+    <string name="create_advert_button">Создать объявление</string>
     <string name="drafts">Черновики</string>
-    <string name="dont_added_bill_to_favorites">Вы еще не добавили объявления в избранное</string>
+    <string name="dont_added_advert_to_favorites">Вы еще не добавили объявления в избранное</string>
     <string name="new_bill">Новое объявление</string>
     <string name="add_photo">Добавить фото</string>
     <string name="new_bill_enter_name_hint">Название</string>
@@ -27,4 +27,7 @@
     <string name="Sig_in_title">Зарегистрируйтесь!</string>
     <string name="dont_have_account">Еще нет аккаунта?</string>
     <string name="log_in_title_4">Войти</string>
+    <string name="logging_error">Произошла ошибка при входе в аккаунт</string>
+    <string name="creating_error">An error occurred while creating an account</string>
+    <string name="profile_loading_error">Ошибка загрузки профиля</string>
 </resources>

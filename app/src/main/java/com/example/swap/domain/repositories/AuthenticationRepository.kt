@@ -1,6 +1,6 @@
 package com.example.swap.domain.repositories
 
-import com.example.swap.utilities.Response
+import com.example.swap.objects.Response
 import kotlinx.coroutines.flow.Flow
 
 interface AuthenticationRepository {
