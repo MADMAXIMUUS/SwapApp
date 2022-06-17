@@ -22,34 +22,30 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.swap.R
 import androidx.navigation.NavController
-import com.example.swap.domain.models.Chat
+import com.example.swap.R
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
 import com.example.swap.ui.theme.White
 import com.example.swap.utilities.HideKeyboard
 
 @Composable
-fun ChatsScreen(
-    chats: List<Chat>,
-    navController: NavController
-) {
+fun ChatsScreen(navController: NavController) {
     HideKeyboard()
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(0.dp, 0.dp, 0.dp, 55.dp)
     ) {
-        items(chats.size) { id ->
-            ChatItem(chat = chats[id], navController = navController)
+        items(10) {
+            ChatItem(navController = navController)
         }
     }
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
-fun ChatItem(chat: Chat, navController: NavController) {
+fun ChatItem(navController: NavController) {
     Card(
         elevation = 3.dp,
         shape = RoundedCornerShape(10.dp),
@@ -93,7 +89,7 @@ fun ChatItem(chat: Chat, navController: NavController) {
                     }
                 )
                 Text(
-                    text = "Вы:" + chat.lastMessage,
+                    text = "Вы:" + "chat.lastMessage",
                     Modifier
                         .padding(10.dp, 0.dp, 10.dp, 10.dp),
                     style = MaterialTheme.typography.body2,
@@ -113,7 +109,7 @@ fun ChatItem(chat: Chat, navController: NavController) {
                     modifier = Modifier
                         .clip(CircleShape)
                         .size(
-                            if (chat.unreadMessageCount < 99) {
+                            if (10 < 99) {
                                 DpSize(30.dp, 30.dp)
                             } else {
                                 DpSize(40.dp, 30.dp)
@@ -130,7 +126,7 @@ fun ChatItem(chat: Chat, navController: NavController) {
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = chat.unreadMessageCount.toString(),
+                        text = 10.toString(),
                         fontSize = 18.sp,
                         color = if (isSystemInDarkTheme()) {
                             White

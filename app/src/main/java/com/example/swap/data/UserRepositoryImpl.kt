@@ -64,4 +64,61 @@ class UserRepositoryImpl @Inject constructor(
             Response.Error(e.localizedMessage ?: "An Unexpected Error")
         }
     }
+
+    override fun setUserName(userId: String, userName: String): Flow<Response<Boolean>> = flow{
+        operationSuccessful = false
+        try {
+            val userObj = mutableMapOf<String, Any>()
+            userObj[USER_DOCUMENT_NAME] = userName
+            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
+                .addOnSuccessListener {
+
+                }.await()
+            if (operationSuccessful){
+                emit(Response.Success(operationSuccessful))
+            }else{
+                emit(Response.Error("Error when saving changes"))
+            }
+        } catch (e: Exception) {
+            Response.Error(e.localizedMessage ?: "An Unexpected Error")
+        }
+    }
+
+    override fun setUserEmail(userId: String, email: String): Flow<Response<Boolean>> = flow{
+        operationSuccessful = false
+        try {
+            val userObj = mutableMapOf<String, Any>()
+            userObj[USER_DOCUMENT_EMAIL] = email
+            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
+                .addOnSuccessListener {
+
+                }.await()
+            if (operationSuccessful){
+                emit(Response.Success(operationSuccessful))
+            }else{
+                emit(Response.Error("Error when saving changes"))
+            }
+        } catch (e: Exception) {
+            Response.Error(e.localizedMessage ?: "An Unexpected Error")
+        }
+    }
+
+    override fun setUserPhone(userId: String, phone: String): Flow<Response<Boolean>> = flow{
+        operationSuccessful = false
+        try {
+            val userObj = mutableMapOf<String, Any>()
+            userObj[USER_DOCUMENT_PHONE] = phone
+            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
+                .addOnSuccessListener {
+
+                }.await()
+            if (operationSuccessful){
+                emit(Response.Success(operationSuccessful))
+            }else{
+                emit(Response.Error("Error when saving changes"))
+            }
+        } catch (e: Exception) {
+            Response.Error(e.localizedMessage ?: "An Unexpected Error")
+        }
+    }
 }

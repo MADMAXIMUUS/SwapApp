@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
@@ -32,8 +33,11 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.swap.objects.BottomNavItem
+import com.example.swap.presentation.advertscreen.AdvertScreen
+import com.example.swap.presentation.chatscreen.ChatScreen
 import com.example.swap.presentation.chatscreen.ChatsScreen
 import com.example.swap.presentation.draftscreen.draft.DraftsScreen
+import com.example.swap.presentation.draftscreen.new_advert.AdvertViewModel
 import com.example.swap.presentation.draftscreen.new_advert.NewAdvertScreen
 import com.example.swap.presentation.favoritescreen.FavoriteScreen
 import com.example.swap.presentation.homescreen.HomeScreen
@@ -73,7 +77,11 @@ class MainActivity : ComponentActivity() {
 fun LoadMainUi() {
     val navController = rememberNavController()
     val authViewModel: AuthenticationViewModel = hiltViewModel()
+    val advertViewModel: AdvertViewModel = hiltViewModel()
     val mode = remember {
+        mutableStateOf(false)
+    }
+    val gridMode = remember {
         mutableStateOf(false)
     }
     val bottomBarState = rememberSaveable { (mutableStateOf(true)) }
@@ -112,19 +120,25 @@ fun LoadMainUi() {
             bottomBarState.value = false
             topBarState.value = true
         }
+        "advert/{id}" -> {
+            bottomBarState.value = false
+            topBarState.value = true
+        }
     }
     Scaffold(
         topBar = {
             TopBar(
                 navController = navController,
-                topBarState = topBarState
+                topBarState = topBarState,
+                mode = mode
             )
         },
         content = {
             Navigation(
                 navController = navController,
-                mode = mode.value,
-                authViewModel = authViewModel
+                mode = gridMode.value,
+                authViewModel = authViewModel,
+                advertViewModel = advertViewModel
             )
         },
         bottomBar = {
@@ -171,7 +185,8 @@ fun LoadMainUi() {
 fun Navigation(
     mode: Boolean,
     navController: NavHostController,
-    authViewModel: AuthenticationViewModel
+    authViewModel: AuthenticationViewModel,
+    advertViewModel: AdvertViewModel
 ) {
     NavHost(
         navController = navController,
@@ -181,26 +196,23 @@ fun Navigation(
     ) {
         composable("home") {
             HomeScreen(
-                mode, listOf()
+                mode, navController
             )
         }
         composable("favorite") {
-            FavoriteScreen(listOf())
+            FavoriteScreen(navController)
         }
         composable("adverts") {
-            DraftsScreen(listOf(), navController)
+            DraftsScreen(navController)
         }
         composable("chats") {
-            ChatsScreen(
-                listOf(),
-                navController
-            )
+            ChatsScreen(navController)
         }
         composable("profile") {
             ProfileScreen(navController, authViewModel)
         }
         composable("new_advert") {
-            NewAdvertScreen(navController)
+            NewAdvertScreen(navController, advertViewModel, authViewModel)
         }
         composable("signIn") {
             SignInScreen(navController, authViewModel)
@@ -212,33 +224,37 @@ fun Navigation(
             "chat/{id}",
             arguments = listOf(
                 navArgument("id") {
-                    type = NavType.LongType
+                    type = NavType.StringType
                 }
             )
         ) {
             val id = remember {
-                it.arguments?.getLong("id")
+                it.arguments?.getString("id").toString()
             }
-
+            ChatScreen(id)
         }
         composable(
             "advert/{id}",
             arguments = listOf(
                 navArgument("id") {
-                    type = NavType.LongType
+                    type = NavType.StringType
                 }
             )
         ) {
             val id = remember {
-                it.arguments?.getLong("id")
+                it.arguments?.getString("id").toString()
             }
-
+            AdvertScreen(id)
         }
     }
 }
 
 @Composable
-fun TopBar(navController: NavController, topBarState: MutableState<Boolean>) {
+fun TopBar(
+    navController: NavController,
+    topBarState: MutableState<Boolean>,
+    mode: MutableState<Boolean>
+) {
     val navBackStackEntry = navController.currentBackStackEntryAsState()
     val title: String = when (navBackStackEntry.value?.destination?.route ?: "home") {
         "home" -> stringResource(R.string.bottom_menu_home)
@@ -302,15 +318,20 @@ fun TopBar(navController: NavController, topBarState: MutableState<Boolean>) {
                             )
                         },
                         actions = {
-                            Row {
                                 Icon(
                                     painter = painterResource(id = R.drawable.ic_owl_search),
                                     contentDescription = "Filter and search",
-                                    modifier = Modifier.size(40.dp),
+                                    modifier = Modifier
+                                        .size(40.dp)
+                                        .clickable(
+                                            enabled = true,
+                                            onClick = {
+                                                mode.value = !mode.value
+                                            }
+                                        ),
                                     tint = Color.Unspecified
                                 )
                                 Spacer(modifier = Modifier.requiredWidth(12.dp))
-                            }
                         },
                     )
                 }

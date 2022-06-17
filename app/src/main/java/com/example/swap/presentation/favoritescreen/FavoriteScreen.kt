@@ -17,6 +17,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.swap.R
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
@@ -25,10 +27,10 @@ import com.example.swap.domain.models.Advert
 
 @Composable
 fun FavoriteScreen(
-    adverts: List<Advert>
+    navController: NavController
 ) {
     HideKeyboard()
-    if (adverts.isNotEmpty()) {
+    /*if (adverts.isNotEmpty()) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -51,7 +53,7 @@ fun FavoriteScreen(
                 style = MaterialTheme.typography.body1
             )
         }
-    }
+    }*/
 }
 
 @Composable

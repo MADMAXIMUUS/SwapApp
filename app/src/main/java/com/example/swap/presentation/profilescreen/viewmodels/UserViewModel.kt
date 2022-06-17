@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.swap.domain.models.User
-import com.example.swap.domain.use_cases.user_use_cases.UserUserCases
+import com.example.swap.domain.use_cases.user_use_cases.UserUseCases
 import com.example.swap.objects.Response
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class UserViewModel @Inject constructor(
     private val auth: FirebaseAuth,
-    private val userUseCases: UserUserCases
+    private val userUseCases: UserUseCases
 ) : ViewModel() {
 
     private val userId = auth.currentUser?.uid

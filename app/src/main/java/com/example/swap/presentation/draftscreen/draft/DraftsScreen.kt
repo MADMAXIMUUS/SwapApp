@@ -4,8 +4,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
@@ -19,13 +17,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.swap.R
+import com.example.swap.domain.models.Advert
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
-import com.example.swap.domain.models.Advert
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DraftsScreen(drafts: List<Advert>, navController: NavController) {
+fun DraftsScreen(navController: NavController) {
     HideKeyboard()
     Column(
         modifier = Modifier
@@ -44,8 +42,8 @@ fun DraftsScreen(drafts: List<Advert>, navController: NavController) {
             },
             style = MaterialTheme.typography.h3
         )
-        if (drafts.isNotEmpty()) {
-            LazyVerticalGrid(
+        /*if (drafts.isNotEmpty()) {
+            *//*LazyVerticalGrid(
                 cells = GridCells.Fixed(2),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -54,20 +52,19 @@ fun DraftsScreen(drafts: List<Advert>, navController: NavController) {
                 items(drafts.size) { id ->
                     DraftItem(advert = drafts[id])
                 }
+            }*//*
+        } else {*/
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.7f),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.dont_have_drafts_message),
+                style = MaterialTheme.typography.body1
+            )
             }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.7f),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = stringResource(R.string.dont_have_drafts_message),
-                    style = MaterialTheme.typography.body1
-                )
-            }
-        }
         Box(
             modifier = Modifier
                 .fillMaxWidth()

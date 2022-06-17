@@ -7,10 +7,17 @@ import kotlinx.coroutines.flow.Flow
 interface UserRepository {
 
     fun getUserDetails(userId: String): Flow<Response<User>>
+
     fun setUserDetails(
         userId: String,
         name: String,
         email: String,
         phone: String
     ): Flow<Response<Boolean>>
+
+    fun setUserName(userId: String, userName: String): Flow<Response<Boolean>>
+
+    fun setUserEmail(userId: String, email: String): Flow<Response<Boolean>>
+
+    fun setUserPhone(userId: String, phone: String): Flow<Response<Boolean>>
 }

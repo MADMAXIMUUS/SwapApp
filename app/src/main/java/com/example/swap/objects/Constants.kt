@@ -14,4 +14,11 @@ object Constants {
     const val USER_DOCUMENT_ID = "id"
     const val USER_DOCUMENT_RATING = "rating"
     const val USER_DOCUMENT_AVATAR = "avatarUrl"
+
+    const val ADVERT_DOCUMENT_ID = "id"
+    const val ADVERT_DOCUMENT_AUTHOR_ID = "authorId"
+    const val ADVERT_DOCUMENT_TITLE = "title"
+    const val ADVERT_DOCUMENT_DESCRIPTION = "description"
+    const val ADVERT_DOCUMENT_IMAGE_LIST = "imageListUrls"
+    const val ADVERT_DOCUMENT_TAGS = "tags"
 }

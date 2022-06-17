@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.swap.R
+import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
 import com.example.swap.ui.theme.Dark_Background
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Light_brown
@@ -29,7 +30,11 @@ import com.example.swap.utilities.HideKeyboard
 
 
 @Composable
-fun NewAdvertScreen(navController: NavController) {
+fun NewAdvertScreen(
+    navController: NavController,
+    viewModel: AdvertViewModel,
+    authViewModel: AuthenticationViewModel
+) {
     HideKeyboard()
     val billTitle = remember { mutableStateOf("") }
     val billDescription = remember { mutableStateOf("") }

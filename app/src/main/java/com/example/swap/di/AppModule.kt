@@ -1,13 +1,14 @@
 package com.example.swap.di
 
+import com.example.swap.data.AdvertRepositoryImpl
 import com.example.swap.data.AuthenticationRepositoryImpl
 import com.example.swap.data.UserRepositoryImpl
+import com.example.swap.domain.repositories.AdvertRepository
 import com.example.swap.domain.repositories.AuthenticationRepository
 import com.example.swap.domain.repositories.UserRepository
+import com.example.swap.domain.use_cases.advert_use_cases.*
 import com.example.swap.domain.use_cases.auth_use_cases.*
-import com.example.swap.domain.use_cases.user_use_cases.GetUserDetails
-import com.example.swap.domain.use_cases.user_use_cases.SetUserDetails
-import com.example.swap.domain.use_cases.user_use_cases.UserUserCases
+import com.example.swap.domain.use_cases.user_use_cases.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -68,8 +69,28 @@ object AppModule {
     @Singleton
     @Provides
     fun provideUserUseCases(userRepository: UserRepository) =
-        UserUserCases(
+        UserUseCases(
             GetUserDetails(userRepository),
-            SetUserDetails(userRepository)
+            SetUserDetails(userRepository),
+            SetUserName(userRepository),
+            SetUserEmail(userRepository),
+            SetUserPhone(userRepository)
+        )
+
+
+    @Singleton
+    @Provides
+    fun provideAdvertRepository(firestore: FirebaseFirestore): AdvertRepository {
+        return AdvertRepositoryImpl(firestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideAdvertUseCases(advertRepository: AdvertRepository) =
+        AdvertUseCases(
+            GetAllAdverts(advertRepository),
+            GetOneAdvert(advertRepository),
+            CreateAdvert(advertRepository),
+            UpdateAdvert(advertRepository)
         )
 }

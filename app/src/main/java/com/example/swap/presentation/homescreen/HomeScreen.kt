@@ -1,12 +1,8 @@
 package com.example.swap.presentation.homescreen
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.GridCells
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyVerticalGrid
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.ExperimentalMaterialApi
@@ -20,27 +16,27 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.swap.R
+import com.example.swap.domain.models.Advert
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
 import com.example.swap.utilities.HideKeyboard
-import com.example.swap.domain.models.Advert
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun HomeScreen(
     mode: Boolean,
-    adverts: List<Advert>
+    navController: NavHostController
 ) {
     HideKeyboard()
-    if (!mode) {
+    /*if (!mode) {
         LazyVerticalGrid(
             cells = GridCells.Fixed(2),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(0.dp, 0.dp, 0.dp, 55.dp),
         ) {
-            items(adverts.size) { id ->
+            items(10) { id ->
                 HomeSmallItem(advert = adverts[id])
 
             }
@@ -55,7 +51,7 @@ fun HomeScreen(
                 HomeLineItem(advert = adverts[id])
             }
         }
-    }
+    }*/
 }
 
 @Composable
