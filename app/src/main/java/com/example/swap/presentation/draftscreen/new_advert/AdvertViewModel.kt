@@ -18,20 +18,23 @@ class AdvertViewModel @Inject constructor(
     private val advertUseCases: AdvertUseCases
 ) : ViewModel() {
 
-    private val _advertData = mutableStateOf<Response<List<Advert>>>(Response.Loading)
-    val advertData: State<Response<List<Advert>>> = _advertData
+    private val _advertsData = mutableStateOf<Response<List<Advert>>>(Response.Loading)
+    val advertsData: State<Response<List<Advert>>> = _advertsData
 
-    private val _createAdvertData = mutableStateOf<Response<Boolean>>(Response.Success(false))
-    val createAdvertData: State<Response<Boolean>> = _createAdvertData
+    private val _advertData = mutableStateOf<Response<Advert>>(Response.Loading)
+    val advertData: State<Response<Advert>> = _advertData
 
-    private val _updateAdvertData = mutableStateOf<Response<Boolean>>(Response.Success(false))
-    val updateAdvert: State<Response<Boolean>> = _updateAdvertData
+    private val _createAdvertData = mutableStateOf<Response<Boolean?>>(Response.Success(null))
+    val createAdvertData: State<Response<Boolean?>> = _createAdvertData
+
+    private val _updateAdvertData = mutableStateOf<Response<Boolean?>>(Response.Success(null))
+    val updateAdvert: State<Response<Boolean?>> = _updateAdvertData
 
     fun getAllAdverts() {
         val userid = auth.currentUser?.uid!!
         viewModelScope.launch {
             advertUseCases.getAll(userid).collect {
-                _advertData.value = it
+                _advertsData.value = it
             }
         }
     }
@@ -40,15 +43,15 @@ class AdvertViewModel @Inject constructor(
         title: String,
         description: String,
         tags: List<String>,
-        authorId: String,
         images: List<String>
     ) {
+        val id = auth.currentUser?.uid!!
         viewModelScope.launch {
             advertUseCases.createAdvert(
                 title = title,
                 description = description,
                 tags = tags,
-                authorId = authorId,
+                authorId = id,
                 images = images
             ).collect {
                 _createAdvertData.value = it

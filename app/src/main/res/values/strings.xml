@@ -10,7 +10,7 @@
     <string name="create_advert_button">Create advert</string>
     <string name="drafts">Drafts</string>
     <string name="dont_added_advert_to_favorites">You have not added advert to your favorites yet</string>
-    <string name="new_bill">New bill</string>
+    <string name="new_advert">New advert</string>
     <string name="add_photo">Add photo</string>
     <string name="new_bill_enter_name_hint">Enter tittle</string>
     <string name="new_bill_enter_description_hint">Enter description</string>
@@ -31,4 +31,5 @@
     <string name="logging_error">An error occurred while logging into your account</string>
     <string name="creating_error">An error occurred while creating an account</string>
     <string name="profile_loading_error">Profile loading error</string>
+    <string name="enter_title_hint">Title</string>
 </resources>

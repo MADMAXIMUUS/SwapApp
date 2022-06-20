@@ -15,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -32,11 +33,12 @@ import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Light_brown
 import com.example.swap.ui.theme.Yellow
 import com.example.swap.utilities.HideKeyboard
-import com.example.swap.utilities.ShowToast
+import com.example.swap.utilities.showToast
 
 
 @Composable
 fun LogInScreen(navController: NavController, authViewModel: AuthenticationViewModel) {
+    val context = LocalContext.current
     HideKeyboard()
     ConstraintLayout(
         modifier = Modifier
@@ -251,11 +253,11 @@ fun LogInScreen(navController: NavController, authViewModel: AuthenticationViewM
                                     }
                                 }
                             } else {
-                                ShowToast(stringResource(R.string.logging_error))
+                                showToast(stringResource(R.string.logging_error), context)
                             }
                         }
                         is Response.Error -> {
-                            ShowToast(response.message)
+                            showToast(response.message, context)
                         }
                     }
             }

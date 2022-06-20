@@ -39,6 +39,12 @@ val Typography = Typography(
                 fontStyle = FontStyle.Normal,
                 fontSize = 16.sp
         ),
+        subtitle2 = TextStyle(
+                fontFamily = BloggerSans,
+                fontWeight = FontWeight.Bold,
+                fontStyle = FontStyle.Normal,
+                fontSize = 20.sp
+        ),
         button = TextStyle(
                 fontFamily = BloggerSans,
                 fontWeight = FontWeight.Medium,

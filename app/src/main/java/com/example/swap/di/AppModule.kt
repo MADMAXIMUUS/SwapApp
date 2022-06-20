@@ -2,12 +2,17 @@ package com.example.swap.di
 
 import com.example.swap.data.AdvertRepositoryImpl
 import com.example.swap.data.AuthenticationRepositoryImpl
+import com.example.swap.data.TagRepositoryImpl
 import com.example.swap.data.UserRepositoryImpl
 import com.example.swap.domain.repositories.AdvertRepository
 import com.example.swap.domain.repositories.AuthenticationRepository
+import com.example.swap.domain.repositories.TagRepository
 import com.example.swap.domain.repositories.UserRepository
 import com.example.swap.domain.use_cases.advert_use_cases.*
 import com.example.swap.domain.use_cases.auth_use_cases.*
+import com.example.swap.domain.use_cases.tag_use_cases.AddTag
+import com.example.swap.domain.use_cases.tag_use_cases.GetAllTags
+import com.example.swap.domain.use_cases.tag_use_cases.TagUseCases
 import com.example.swap.domain.use_cases.user_use_cases.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -92,5 +97,19 @@ object AppModule {
             GetOneAdvert(advertRepository),
             CreateAdvert(advertRepository),
             UpdateAdvert(advertRepository)
+        )
+
+    @Singleton
+    @Provides
+    fun provideTagRepository(firestore: FirebaseFirestore): TagRepository {
+        return TagRepositoryImpl(firestore)
+    }
+
+    @Singleton
+    @Provides
+    fun provideTagUseCases(tagRepository: TagRepository) =
+        TagUseCases(
+            GetAllTags(tagRepository),
+            AddTag(tagRepository)
         )
 }

@@ -45,10 +45,7 @@ import com.example.swap.presentation.profilescreen.LogInScreen
 import com.example.swap.presentation.profilescreen.ProfileScreen
 import com.example.swap.presentation.profilescreen.SignInScreen
 import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
-import com.example.swap.ui.theme.Deep_dark_blue
-import com.example.swap.ui.theme.Light_brown
-import com.example.swap.ui.theme.SwapTheme
-import com.example.swap.ui.theme.Yellow
+import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -203,7 +200,7 @@ fun Navigation(
             FavoriteScreen(navController)
         }
         composable("adverts") {
-            DraftsScreen(navController)
+            DraftsScreen(navController, authViewModel)
         }
         composable("chats") {
             ChatsScreen(navController)
@@ -212,7 +209,7 @@ fun Navigation(
             ProfileScreen(navController, authViewModel)
         }
         composable("new_advert") {
-            NewAdvertScreen(navController, advertViewModel, authViewModel)
+            NewAdvertScreen(navController, advertViewModel)
         }
         composable("signIn") {
             SignInScreen(navController, authViewModel)
@@ -264,7 +261,7 @@ fun TopBar(
         "profile" -> stringResource(R.string.bottom_menu_profile)
         "logIn" -> stringResource(R.string.log_in_title_3)
         "signIn" -> stringResource(id = R.string.register_title)
-        "new_advert" -> stringResource(R.string.new_bill)
+        "new_advert" -> stringResource(R.string.new_advert)
         else -> ""
     }
     AnimatedVisibility(
@@ -380,8 +377,16 @@ fun BottomNavigationBar(
                     BottomNavigationItem(
                         selected = selected,
                         onClick = { onItemClick(item) },
-                        selectedContentColor = Light_brown,
-                        unselectedContentColor = Yellow,
+                        selectedContentColor = if (isSystemInDarkTheme()) {
+                            Light_brown
+                        } else {
+                            Deep_dark_blue
+                        },
+                        unselectedContentColor = if (isSystemInDarkTheme()) {
+                            Yellow
+                        } else {
+                            Color.Gray
+                        },
                         alwaysShowLabel = true,
                         icon = {
                             Column(horizontalAlignment = CenterHorizontally) {

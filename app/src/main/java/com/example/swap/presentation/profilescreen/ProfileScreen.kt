@@ -14,6 +14,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -26,7 +27,7 @@ import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationView
 import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
-import com.example.swap.utilities.ShowToast
+import com.example.swap.utilities.showToast
 import com.skydoves.landscapist.ShimmerParams
 import com.skydoves.landscapist.glide.GlideImage
 
@@ -36,6 +37,7 @@ fun ProfileScreen(
     navController: NavController,
     authViewModel: AuthenticationViewModel
 ) {
+    val context = LocalContext.current
     HideKeyboard()
     val userViewModel: UserViewModel = hiltViewModel()
     userViewModel.getUserInfo()
@@ -52,7 +54,7 @@ fun ProfileScreen(
             }
         }
         is Response.Error -> {
-            ShowToast(message = stringResource(R.string.profile_loading_error))
+            showToast(message = stringResource(R.string.profile_loading_error), context = context)
         }
         is Response.Success -> {
             if (authViewModel.isUserAuthenticated()) {

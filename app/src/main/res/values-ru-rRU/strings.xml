@@ -9,7 +9,7 @@
     <string name="create_advert_button">Создать объявление</string>
     <string name="drafts">Черновики</string>
     <string name="dont_added_advert_to_favorites">Вы еще не добавили объявления в избранное</string>
-    <string name="new_bill">Новое объявление</string>
+    <string name="new_advert">Новое объявление</string>
     <string name="add_photo">Добавить фото</string>
     <string name="new_bill_enter_name_hint">Название</string>
     <string name="new_bill_enter_description_hint">Описание</string>
@@ -30,4 +30,5 @@
     <string name="logging_error">Произошла ошибка при входе в аккаунт</string>
     <string name="creating_error">An error occurred while creating an account</string>
     <string name="profile_loading_error">Ошибка загрузки профиля</string>
+    <string name="enter_title_hint">Название</string>
 </resources>

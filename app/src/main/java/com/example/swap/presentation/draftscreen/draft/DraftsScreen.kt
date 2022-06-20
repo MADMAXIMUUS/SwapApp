@@ -12,18 +12,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.swap.R
 import com.example.swap.domain.models.Advert
+import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
+import com.example.swap.utilities.showToast
 
-@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun DraftsScreen(navController: NavController) {
+fun DraftsScreen(navController: NavController, authViewModel: AuthenticationViewModel) {
+    val context = LocalContext.current
+    val message = stringResource(id = R.string.profile_screen_message)
     HideKeyboard()
     Column(
         modifier = Modifier
@@ -64,14 +68,20 @@ fun DraftsScreen(navController: NavController) {
                 text = stringResource(R.string.dont_have_drafts_message),
                 style = MaterialTheme.typography.body1
             )
-            }
+        }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
             Button(
-                onClick = { navController.navigate("new_advert") },
+                onClick = {
+                    if (authViewModel.isUserAuthenticated())
+                        navController.navigate("new_advert")
+                    else {
+                        showToast(context = context, message = message)
+                    }
+                },
                 colors = ButtonDefaults
                     .buttonColors(
                         backgroundColor = Light_brown

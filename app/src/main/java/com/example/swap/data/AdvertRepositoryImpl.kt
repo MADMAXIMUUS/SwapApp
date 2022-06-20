@@ -5,11 +5,13 @@ import com.example.swap.domain.repositories.AdvertRepository
 import com.example.swap.objects.Constants
 import com.example.swap.objects.Constants.ADVERT_COLLECTION
 import com.example.swap.objects.Constants.ADVERT_DOCUMENT_AUTHOR_ID
+import com.example.swap.objects.Constants.ADVERT_DOCUMENT_CREATED_AT
 import com.example.swap.objects.Constants.ADVERT_DOCUMENT_DESCRIPTION
 import com.example.swap.objects.Constants.ADVERT_DOCUMENT_IMAGE_LIST
 import com.example.swap.objects.Constants.ADVERT_DOCUMENT_TAGS
 import com.example.swap.objects.Constants.ADVERT_DOCUMENT_TITLE
 import com.example.swap.objects.Response
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
@@ -84,7 +86,19 @@ class AdvertRepositoryImpl @Inject constructor(
                     operationSuccessful = true
                 }.await()
             if (operationSuccessful) {
-                emit(Response.Success(operationSuccessful))
+                var updated = false
+                val advertObj = mutableMapOf<String, Any>()
+                advertObj[ADVERT_DOCUMENT_CREATED_AT] = FieldValue.serverTimestamp()
+                firebaseFirestore.collection(ADVERT_COLLECTION).document(advertId)
+                    .update(advertObj)
+                    .addOnSuccessListener {
+                        updated = true
+                    }.await()
+                if (updated)
+                    emit(Response.Success(operationSuccessful))
+                else {
+                    emit(Response.Error("Error creating ad! Try later."))
+                }
             } else {
                 emit(Response.Error("Error creating ad! Try later."))
             }
