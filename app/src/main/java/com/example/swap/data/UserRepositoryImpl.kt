@@ -28,7 +28,7 @@ class UserRepositoryImpl @Inject constructor(
                 .addSnapshotListener { snapshot, error ->
                     val response = if (snapshot != null) {
                         val userInfo = snapshot.toObject(User::class.java)
-                        Response.Success<User>(userInfo!!)
+                        Response.Success(userInfo!!)
                     } else {
                         Response.Error(error?.localizedMessage ?: error.toString())
                     }

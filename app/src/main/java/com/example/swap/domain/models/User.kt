@@ -5,6 +5,7 @@ data class User(
     var name: String = "",
     var email: String = "",
     var phone: String = "",
+    var signInType: String = "",
     var registrationDate: String = "",
     var avatarUrl: String = "empty",
     var rating: Double = 5.0,

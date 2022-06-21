@@ -33,7 +33,6 @@ class AdvertRepositoryImpl @Inject constructor(
             .addSnapshotListener { snapshot, e ->
                 val response = if (snapshot != null) {
                     val advertsList = snapshot.toObjects(Advert::class.java)
-                    Timber.tag("postLists").d(advertsList.toString())
                     Response.Success<List<Advert>>(advertsList)
                 } else {
                     Response.Error(e?.message ?: e.toString())

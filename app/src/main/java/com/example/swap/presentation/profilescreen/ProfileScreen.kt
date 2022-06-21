@@ -19,11 +19,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.example.swap.R
+import com.example.swap.objects.Constants.SIGN_IN_TYPE_ANONYMOUS
 import com.example.swap.objects.Response
-import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
 import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
@@ -35,11 +34,10 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    authViewModel: AuthenticationViewModel
+    userViewModel: UserViewModel
 ) {
     val context = LocalContext.current
     HideKeyboard()
-    val userViewModel: UserViewModel = hiltViewModel()
     userViewModel.getUserInfo()
     when (val response = userViewModel.getUserData.value) {
         is Response.Loading -> {
@@ -57,9 +55,9 @@ fun ProfileScreen(
             showToast(message = stringResource(R.string.profile_loading_error), context = context)
         }
         is Response.Success -> {
-            if (authViewModel.isUserAuthenticated()) {
-                if (response.data != null) {
-                    val user = response.data
+            if (response.data != null) {
+                val user = response.data
+                if (user.signInType != SIGN_IN_TYPE_ANONYMOUS) {
                     Column(
                         modifier = Modifier
                             .fillMaxSize()
@@ -273,82 +271,82 @@ fun ProfileScreen(
                             }
                         }
                     }
-                }
-            } else {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    verticalArrangement = Arrangement.Center
-                ) {
-                    Box(
+                } else {
+                    Column(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp),
-                        contentAlignment = Alignment.Center
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.Center
                     ) {
-                        Text(
-                            modifier = Modifier.padding(10.dp),
-                            text = stringResource(R.string.profile_screen_message),
-                            style = MaterialTheme.typography.body1
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp, 10.dp, 20.dp, 0.dp),
-                    ) {
-                        Button(
-                            onClick = { navController.navigate("logIn") },
-                            colors = ButtonDefaults
-                                .buttonColors(
-                                    backgroundColor = Light_brown
-                                ),
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(60.dp)
-                                .clip(shape = RoundedCornerShape(10.dp))
+                                .padding(20.dp),
+                            contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = stringResource(R.string.log_in_title),
-                                style = MaterialTheme.typography.button,
-                                color = if (isSystemInDarkTheme()) {
-                                    Dark_Background
-                                } else {
-                                    Color.White
-                                }
+                                modifier = Modifier.padding(10.dp),
+                                text = stringResource(R.string.profile_screen_message),
+                                style = MaterialTheme.typography.body1
                             )
                         }
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp),
-                    ) {
-                        Button(
-                            onClick = { navController.navigate("signIn") },
-                            colors = ButtonDefaults
-                                .buttonColors(
-                                    backgroundColor = Light_brown
-                                ),
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(60.dp)
-                                .clip(shape = RoundedCornerShape(10.dp))
+                                .padding(20.dp, 10.dp, 20.dp, 0.dp),
                         ) {
-                            Text(
-                                text = stringResource(R.string.register_title),
-                                style = MaterialTheme.typography.button,
-                                color = if (isSystemInDarkTheme()) {
-                                    Dark_Background
-                                } else {
-                                    Color.White
-                                }
-                            )
+                            Button(
+                                onClick = { navController.navigate("logIn") },
+                                colors = ButtonDefaults
+                                    .buttonColors(
+                                        backgroundColor = Light_brown
+                                    ),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(60.dp)
+                                    .clip(shape = RoundedCornerShape(10.dp))
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.log_in_title),
+                                    style = MaterialTheme.typography.button,
+                                    color = if (isSystemInDarkTheme()) {
+                                        Dark_Background
+                                    } else {
+                                        Color.White
+                                    }
+                                )
+                            }
+                        }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                        ) {
+                            Button(
+                                onClick = { navController.navigate("signIn") },
+                                colors = ButtonDefaults
+                                    .buttonColors(
+                                        backgroundColor = Light_brown
+                                    ),
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(60.dp)
+                                    .clip(shape = RoundedCornerShape(10.dp))
+                            ) {
+                                Text(
+                                    text = stringResource(R.string.register_title),
+                                    style = MaterialTheme.typography.button,
+                                    color = if (isSystemInDarkTheme()) {
+                                        Dark_Background
+                                    } else {
+                                        Color.White
+                                    }
+                                )
+                            }
                         }
                     }
                 }
-            }
+                }
         }
     }
 }

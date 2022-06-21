@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.Flow
 interface AdvertRepository {
 
     fun getAllAdverts(userId: String): Flow<Response<List<Advert>>>
+
     fun getOneAdvert(advertId: String): Flow<Response<Advert>>
 
     fun createAdvert(

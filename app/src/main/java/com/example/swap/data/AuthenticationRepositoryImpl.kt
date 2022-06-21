@@ -2,6 +2,8 @@ package com.example.swap.data
 
 import com.example.swap.domain.models.User
 import com.example.swap.domain.repositories.AuthenticationRepository
+import com.example.swap.objects.Constants.SIGN_IN_TYPE_ANONYMOUS
+import com.example.swap.objects.Constants.SIGN_IN_TYPE_EMAIL
 import com.example.swap.objects.Constants.USER_COLLECTION
 import com.example.swap.objects.Response
 import com.google.firebase.auth.FirebaseAuth
@@ -58,7 +60,7 @@ class AuthenticationRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun firebaseSignIn(
+    override fun firebaseSignInEmail(
         name: String,
         email: String,
         password: String
@@ -73,8 +75,37 @@ class AuthenticationRepositoryImpl @Inject constructor(
                 val userId = auth.currentUser?.uid.toString()
                 val obj = User(
                     id = userId,
+                    signInType = SIGN_IN_TYPE_EMAIL,
                     name = name,
                     email = email
+                )
+                firestore.collection(USER_COLLECTION).document(userId).set(obj)
+                    .addOnSuccessListener {
+
+                    }.await()
+                emit(Response.Success(operationSuccessful))
+            } else {
+                Response.Success(operationSuccessful)
+            }
+        } catch (e: Exception) {
+            emit(Response.Error(e.localizedMessage ?: "An Unexpected Error"))
+        }
+    }
+
+    override fun firebaseSignInAnon(): Flow<Response<Boolean>> = flow {
+        operationSuccessful = false
+        try {
+            emit(Response.Loading)
+            auth.signInAnonymously().addOnSuccessListener {
+                operationSuccessful = true
+            }.await()
+            if (operationSuccessful) {
+                val userId = auth.currentUser?.uid.toString()
+                val obj = User(
+                    id = userId,
+                    signInType = SIGN_IN_TYPE_ANONYMOUS,
+                    name = "Anon",
+                    email = "anonemail@anon.com"
                 )
                 firestore.collection(USER_COLLECTION).document(userId).set(obj)
                     .addOnSuccessListener {

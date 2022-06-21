@@ -31,12 +31,13 @@ class AdvertViewModel @Inject constructor(
     val updateAdvert: State<Response<Boolean?>> = _updateAdvertData
 
     fun getAllAdverts() {
-        val userid = auth.currentUser?.uid!!
-        viewModelScope.launch {
-            advertUseCases.getAll(userid).collect {
-                _advertsData.value = it
+        val userid = auth.currentUser?.uid
+        if (userid != null)
+            viewModelScope.launch {
+                advertUseCases.getAllWithUserId(userid).collect {
+                    _advertsData.value = it
+                }
             }
-        }
     }
 
     fun createAdvert(

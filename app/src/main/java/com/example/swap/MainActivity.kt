@@ -45,7 +45,11 @@ import com.example.swap.presentation.profilescreen.LogInScreen
 import com.example.swap.presentation.profilescreen.ProfileScreen
 import com.example.swap.presentation.profilescreen.SignInScreen
 import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
-import com.example.swap.ui.theme.*
+import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
+import com.example.swap.ui.theme.Deep_dark_blue
+import com.example.swap.ui.theme.Light_brown
+import com.example.swap.ui.theme.SwapTheme
+import com.example.swap.ui.theme.Yellow
 import com.example.swap.utilities.HideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -75,6 +79,9 @@ fun LoadMainUi() {
     val navController = rememberNavController()
     val authViewModel: AuthenticationViewModel = hiltViewModel()
     val advertViewModel: AdvertViewModel = hiltViewModel()
+    val userViewModel: UserViewModel = hiltViewModel()
+    if (!authViewModel.isUserAuthenticated())
+        authViewModel.signInAnon()
     val mode = remember {
         mutableStateOf(false)
     }
@@ -135,7 +142,8 @@ fun LoadMainUi() {
                 navController = navController,
                 mode = gridMode.value,
                 authViewModel = authViewModel,
-                advertViewModel = advertViewModel
+                advertViewModel = advertViewModel,
+                userViewModel = userViewModel
             )
         },
         bottomBar = {
@@ -183,7 +191,8 @@ fun Navigation(
     mode: Boolean,
     navController: NavHostController,
     authViewModel: AuthenticationViewModel,
-    advertViewModel: AdvertViewModel
+    advertViewModel: AdvertViewModel,
+    userViewModel: UserViewModel
 ) {
     NavHost(
         navController = navController,
@@ -193,20 +202,20 @@ fun Navigation(
     ) {
         composable("home") {
             HomeScreen(
-                mode, navController
+                mode, navController, advertViewModel
             )
         }
         composable("favorite") {
             FavoriteScreen(navController)
         }
         composable("adverts") {
-            DraftsScreen(navController, authViewModel)
+            DraftsScreen(navController, userViewModel)
         }
         composable("chats") {
             ChatsScreen(navController)
         }
         composable("profile") {
-            ProfileScreen(navController, authViewModel)
+            ProfileScreen(navController, userViewModel)
         }
         composable("new_advert") {
             NewAdvertScreen(navController, advertViewModel)

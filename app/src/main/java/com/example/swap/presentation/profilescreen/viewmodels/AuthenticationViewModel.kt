@@ -36,9 +36,17 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun signIn(name: String, email: String, password: String) {
+    fun signInEmail(name: String, email: String, password: String) {
         viewModelScope.launch {
-            authUseCases.firebaseSignIn(name, email, password).collect {
+            authUseCases.firebaseSignInEmail(name, email, password).collect {
+                _signInState.value = it
+            }
+        }
+    }
+
+    fun signInAnon() {
+        viewModelScope.launch {
+            authUseCases.firebaseSignInAnon().collect {
                 _signInState.value = it
             }
         }

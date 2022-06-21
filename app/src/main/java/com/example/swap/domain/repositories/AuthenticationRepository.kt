@@ -13,5 +13,7 @@ interface AuthenticationRepository {
 
     fun firebaseLogOut(): Flow<Response<Boolean>>
 
-    fun firebaseSignIn(name: String, email: String, password: String): Flow<Response<Boolean>>
+    fun firebaseSignInEmail(name: String, email: String, password: String): Flow<Response<Boolean>>
+
+    fun firebaseSignInAnon(): Flow<Response<Boolean>>
 }

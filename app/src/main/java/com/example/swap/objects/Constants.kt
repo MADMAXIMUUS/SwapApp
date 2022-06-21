@@ -2,6 +2,9 @@ package com.example.swap.objects
 
 object Constants {
 
+    const val SIGN_IN_TYPE_ANONYMOUS = "Anonymous"
+    const val SIGN_IN_TYPE_EMAIL = "Email"
+
     const val USER_COLLECTION = "users"
     const val ADVERT_COLLECTION = "adverts"
     const val CHAT_COLLECTION = "chats"

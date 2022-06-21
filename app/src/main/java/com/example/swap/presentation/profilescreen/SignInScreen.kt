@@ -298,7 +298,7 @@ fun SignInScreen(navController: NavController, authViewModel: AuthenticationView
         ) {
             Button(
                 onClick = {
-                    authViewModel.signIn(
+                    authViewModel.signInEmail(
                         nameState.value,
                         emailState.value,
                         passwordState.value
@@ -323,17 +323,17 @@ fun SignInScreen(navController: NavController, authViewModel: AuthenticationView
                     style = MaterialTheme.typography.button
                 )
                 if (authViewModel.signInState.value != Response.Success(null))
-                when (val response = authViewModel.signInState.value) {
-                    is Response.Loading -> {
-                        CircularProgressIndicator()
-                    }
-                    is Response.Success -> {
-                        if (response.data!!) {
-                            LaunchedEffect(key1 = true) {
-                                navController.navigate("profile") {
-                                    popUpTo("signIn") {
-                                        inclusive = true
-                                    }
+                    when (val response = authViewModel.signInState.value) {
+                        is Response.Loading -> {
+                            CircularProgressIndicator()
+                        }
+                        is Response.Success -> {
+                            if (response.data!!) {
+                                LaunchedEffect(key1 = true) {
+                                    navController.navigate("profile") {
+                                        popUpTo("signIn") {
+                                            inclusive = true
+                                        }
                                 }
                             }
                         } else {

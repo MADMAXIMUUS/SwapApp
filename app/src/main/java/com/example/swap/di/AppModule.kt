@@ -62,7 +62,8 @@ object AppModule {
             firebaseAuthState = FirebaseAuthState(repository),
             firebaseLogIn = FirebaseLogIn(repository),
             firebaseLogOut = FirebaseLogOut(repository),
-            firebaseSignIn = FirebaseSignIn(repository)
+            firebaseSignInEmail = FirebaseSignInEmail(repository),
+            firebaseSignInAnon = FirebaseSignInAnon(repository)
         )
 
     @Singleton
@@ -93,7 +94,7 @@ object AppModule {
     @Provides
     fun provideAdvertUseCases(advertRepository: AdvertRepository) =
         AdvertUseCases(
-            GetAllAdverts(advertRepository),
+            GetAllAdvertsUserId(advertRepository),
             GetOneAdvert(advertRepository),
             CreateAdvert(advertRepository),
             UpdateAdvert(advertRepository)
