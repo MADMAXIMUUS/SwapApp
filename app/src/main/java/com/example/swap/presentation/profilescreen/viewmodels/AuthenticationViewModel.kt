@@ -44,14 +44,6 @@ class AuthenticationViewModel @Inject constructor(
         }
     }
 
-    fun signInAnon() {
-        viewModelScope.launch {
-            authUseCases.firebaseSignInAnon().collect {
-                _signInState.value = it
-            }
-        }
-    }
-
     fun logOut() {
         viewModelScope.launch {
             authUseCases.firebaseLogOut().collect {

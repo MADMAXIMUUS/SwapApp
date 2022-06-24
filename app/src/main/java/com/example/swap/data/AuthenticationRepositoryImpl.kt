@@ -91,32 +91,4 @@ class AuthenticationRepositoryImpl @Inject constructor(
             emit(Response.Error(e.localizedMessage ?: "An Unexpected Error"))
         }
     }
-
-    override fun firebaseSignInAnon(): Flow<Response<Boolean>> = flow {
-        operationSuccessful = false
-        try {
-            emit(Response.Loading)
-            auth.signInAnonymously().addOnSuccessListener {
-                operationSuccessful = true
-            }.await()
-            if (operationSuccessful) {
-                val userId = auth.currentUser?.uid.toString()
-                val obj = User(
-                    id = userId,
-                    signInType = SIGN_IN_TYPE_ANONYMOUS,
-                    name = "Anon",
-                    email = "anonemail@anon.com"
-                )
-                firestore.collection(USER_COLLECTION).document(userId).set(obj)
-                    .addOnSuccessListener {
-
-                    }.await()
-                emit(Response.Success(operationSuccessful))
-            } else {
-                Response.Success(operationSuccessful)
-            }
-        } catch (e: Exception) {
-            emit(Response.Error(e.localizedMessage ?: "An Unexpected Error"))
-        }
-    }
 }

@@ -34,6 +34,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.swap.objects.BottomNavItem
 import com.example.swap.presentation.advertscreen.AdvertScreen
+import com.example.swap.presentation.camerascreen.CameraScreen
 import com.example.swap.presentation.chatscreen.ChatScreen
 import com.example.swap.presentation.chatscreen.ChatsScreen
 import com.example.swap.presentation.draftscreen.draft.DraftsScreen
@@ -46,10 +47,7 @@ import com.example.swap.presentation.profilescreen.ProfileScreen
 import com.example.swap.presentation.profilescreen.SignInScreen
 import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
 import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
-import com.example.swap.ui.theme.Deep_dark_blue
-import com.example.swap.ui.theme.Light_brown
-import com.example.swap.ui.theme.SwapTheme
-import com.example.swap.ui.theme.Yellow
+import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -80,8 +78,6 @@ fun LoadMainUi() {
     val authViewModel: AuthenticationViewModel = hiltViewModel()
     val advertViewModel: AdvertViewModel = hiltViewModel()
     val userViewModel: UserViewModel = hiltViewModel()
-    if (!authViewModel.isUserAuthenticated())
-        authViewModel.signInAnon()
     val mode = remember {
         mutableStateOf(false)
     }
@@ -104,7 +100,7 @@ fun LoadMainUi() {
             bottomBarState.value = true
             topBarState.value = true
         }
-        "bills" -> {
+        "drafts" -> {
             bottomBarState.value = true
             topBarState.value = true
         }
@@ -125,6 +121,10 @@ fun LoadMainUi() {
             topBarState.value = true
         }
         "advert/{id}" -> {
+            bottomBarState.value = false
+            topBarState.value = true
+        }
+        "camera" -> {
             bottomBarState.value = false
             topBarState.value = true
         }
@@ -162,7 +162,7 @@ fun LoadMainUi() {
                     ),
                     BottomNavItem(
                         name = stringResource(R.string.bottom_menu_adverts),
-                        route = "adverts",
+                        route = "drafts",
                         icon = painterResource(id = R.drawable.ic_bottom_add)
                     ),
                     BottomNavItem(
@@ -208,14 +208,14 @@ fun Navigation(
         composable("favorite") {
             FavoriteScreen(navController)
         }
-        composable("adverts") {
-            DraftsScreen(navController, userViewModel)
+        composable("drafts") {
+            DraftsScreen(navController, authViewModel)
         }
         composable("chats") {
             ChatsScreen(navController)
         }
         composable("profile") {
-            ProfileScreen(navController, userViewModel)
+            ProfileScreen(navController, authViewModel, userViewModel)
         }
         composable("new_advert") {
             NewAdvertScreen(navController, advertViewModel)
@@ -225,6 +225,9 @@ fun Navigation(
         }
         composable("logIn") {
             LogInScreen(navController, authViewModel)
+        }
+        composable("camera") {
+            CameraScreen(navController)
         }
         composable(
             "chat/{id}",
@@ -265,7 +268,7 @@ fun TopBar(
     val title: String = when (navBackStackEntry.value?.destination?.route ?: "home") {
         "home" -> stringResource(R.string.bottom_menu_home)
         "favorite" -> stringResource(R.string.bottom_menu_favorite)
-        "adverts" -> stringResource(R.string.bottom_menu_adverts)
+        "drafts" -> stringResource(R.string.bottom_menu_adverts)
         "chats" -> stringResource(R.string.bottom_menu_chats)
         "profile" -> stringResource(R.string.bottom_menu_profile)
         "logIn" -> stringResource(R.string.log_in_title_3)
@@ -279,7 +282,7 @@ fun TopBar(
         exit = slideOutVertically(targetOffsetY = { -it }),
         content = {
             when (navBackStackEntry.value?.destination?.route) {
-                "new_advert", "signIn", "logIn" -> {
+                "new_advert", "signIn", "logIn","camera" -> {
                     TopAppBar(
                         elevation = 7.dp,
                         navigationIcon = {

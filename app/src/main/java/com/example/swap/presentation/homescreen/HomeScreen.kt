@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,6 +23,7 @@ import com.example.swap.objects.Response
 import com.example.swap.presentation.draftscreen.new_advert.AdvertViewModel
 import com.example.swap.ui.theme.Deep_dark_blue
 import com.example.swap.ui.theme.Night_blue
+import com.example.swap.ui.theme.Yellow
 import com.example.swap.utilities.HideKeyboard
 import com.example.swap.utilities.showToast
 import com.skydoves.landscapist.glide.GlideImage
@@ -37,7 +39,15 @@ fun HomeScreen(
     val context = LocalContext.current
     when (val response = viewModel.advertsData.value) {
         is Response.Loading -> {
-            CircularProgressIndicator()
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                CircularProgressIndicator(
+                    color = if (isSystemInDarkTheme()) {
+                        Yellow
+                    } else {
+                        Deep_dark_blue
+                    }
+                )
+            }
         }
         is Response.Success -> {
             val adverts = response.data

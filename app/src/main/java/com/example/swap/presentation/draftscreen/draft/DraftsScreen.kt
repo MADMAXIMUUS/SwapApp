@@ -18,45 +18,35 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.swap.R
 import com.example.swap.domain.models.Advert
-import com.example.swap.objects.Constants.SIGN_IN_TYPE_ANONYMOUS
-import com.example.swap.objects.Response
-import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
+import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
 import com.example.swap.utilities.showToast
 
 @Composable
-fun DraftsScreen(navController: NavController, userViewModel: UserViewModel) {
+fun DraftsScreen(navController: NavController, authViewModel: AuthenticationViewModel) {
     val context = LocalContext.current
     val message = stringResource(id = R.string.profile_screen_message)
     HideKeyboard()
-    userViewModel.getUserInfo()
-    when (val response = userViewModel.getUserData.value) {
-        is Response.Loading -> {
-            CircularProgressIndicator()
-        }
-        is Response.Success -> {
-            if (response.data != null) {
-                val user = response.data
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(0.dp, 0.dp, 0.dp, 55.dp)
-                ) {
-                    Text(
-                        text = stringResource(R.string.drafts),
-                        modifier = Modifier
-                            .offset(20.dp, 3.dp)
-                            .padding(2.dp),
-                        color = if (isSystemInDarkTheme()) {
-                            Yellow
-                        } else {
-                            Deep_dark_blue
-                        },
-                        style = MaterialTheme.typography.h3
-                    )
-                    /*if (drafts.isNotEmpty()) {
-                        *//*LazyVerticalGrid(
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(0.dp, 0.dp, 0.dp, 55.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.drafts),
+            modifier = Modifier
+                .offset(20.dp, 3.dp)
+                .padding(2.dp),
+            color = if (isSystemInDarkTheme()) {
+                Yellow
+            } else {
+                Deep_dark_blue
+            },
+            style = MaterialTheme.typography.h3
+        )
+        /*if (drafts.isNotEmpty()) {
+            *//*LazyVerticalGrid(
                 cells = GridCells.Fixed(2),
                 modifier = Modifier
                     .fillMaxWidth()
@@ -67,54 +57,48 @@ fun DraftsScreen(navController: NavController, userViewModel: UserViewModel) {
                 }
             }*//*
         } else {*/
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .weight(0.7f),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            text = stringResource(R.string.dont_have_drafts_message),
-                            style = MaterialTheme.typography.body1
-                        )
-                    }
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(20.dp)
-                    ) {
-                        Button(
-                            onClick = {
-                                if (user.signInType != SIGN_IN_TYPE_ANONYMOUS)
-                                    navController.navigate("new_advert")
-                                else {
-                                    showToast(context = context, message = message)
-                                }
-                            },
-                            colors = ButtonDefaults
-                                .buttonColors(
-                                    backgroundColor = Light_brown
-                                ),
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(60.dp)
-                                .clip(shape = RoundedCornerShape(10.dp))
-                        ) {
-                            Text(
-                                text = stringResource(R.string.create_advert_button),
-                                color = if (isSystemInDarkTheme()) {
-                                    Dark_Background
-                                } else {
-                                    Color.White
-                                }
-                            )
-                        }
-                    }
-                }
-            }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .weight(0.7f),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = stringResource(R.string.dont_have_drafts_message),
+                style = MaterialTheme.typography.body1
+            )
         }
-        is Response.Error -> {
-
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(20.dp)
+        ) {
+            Button(
+                onClick = {
+                    if (authViewModel.isUserAuthenticated())
+                        navController.navigate("new_advert")
+                    else {
+                        showToast(context = context, message = message)
+                    }
+                },
+                colors = ButtonDefaults
+                    .buttonColors(
+                        backgroundColor = Light_brown
+                    ),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
+                    .clip(shape = RoundedCornerShape(10.dp))
+            ) {
+                Text(
+                    text = stringResource(R.string.create_advert_button),
+                    color = if (isSystemInDarkTheme()) {
+                        Dark_Background
+                    } else {
+                        Color.White
+                    }
+                )
+            }
         }
     }
 }

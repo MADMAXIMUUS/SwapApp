@@ -6,8 +6,10 @@ import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import com.example.swap.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
+import java.io.File
 
 fun showSnackBar(message: String, scaffoldState: ScaffoldState, scope: CoroutineScope){
     scope.launch {
@@ -24,4 +26,14 @@ fun showToast(message: String, context: Context) {
 fun HideKeyboard() {
     val keyboardController = LocalSoftwareKeyboardController.current
     keyboardController?.hide()
+}
+
+fun getDirectory(context: Context): File {
+    val mediaDir = context.externalMediaDirs.firstOrNull()?.let {
+        File(it, context.getString(R.string.app_name)).apply {
+            mkdirs()
+        }
+    }
+    return  if (mediaDir != null && mediaDir.exists())
+        mediaDir else context.filesDir
 }

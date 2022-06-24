@@ -62,8 +62,7 @@ object AppModule {
             firebaseAuthState = FirebaseAuthState(repository),
             firebaseLogIn = FirebaseLogIn(repository),
             firebaseLogOut = FirebaseLogOut(repository),
-            firebaseSignInEmail = FirebaseSignInEmail(repository),
-            firebaseSignInAnon = FirebaseSignInAnon(repository)
+            firebaseSignInEmail = FirebaseSignInEmail(repository)
         )
 
     @Singleton

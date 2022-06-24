@@ -1,5 +1,6 @@
 package com.example.swap.presentation.draftscreen.new_advert
 
+import android.Manifest
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,7 +32,11 @@ import com.example.swap.objects.Response
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
 import com.example.swap.utilities.showToast
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.PermissionState
+import com.google.accompanist.permissions.rememberPermissionState
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun NewAdvertScreen(
     navController: NavController,
@@ -42,6 +47,9 @@ fun NewAdvertScreen(
     val viewModel: TagViewModel = hiltViewModel()
     val advertDescription = remember { mutableStateOf("") }
     val tags = remember { mutableStateListOf<String>() }
+    val cameraPermissionState = rememberPermissionState(
+        permission = Manifest.permission.CAMERA
+    )
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -51,7 +59,7 @@ fun NewAdvertScreen(
     ) {
         LazyRow {
             item {
-                AddPhotoCard()
+                AddPhotoCard(cameraPermissionState, navController)
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
@@ -241,6 +249,7 @@ fun NewAdvertScreen(
     }
 }
 
+
 @Composable
 fun PhotoCard() {
     Card(
@@ -274,13 +283,18 @@ fun PhotoCard() {
     }
 }
 
+@OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun AddPhotoCard() {
+fun AddPhotoCard(cameraPermissionState: PermissionState, navController: NavController) {
     Card(
         modifier = Modifier
             .width(150.dp)
             .height(150.dp)
-            .padding(0.dp, 5.dp, 5.dp, 0.dp),
+            .padding(0.dp, 5.dp, 5.dp, 0.dp)
+            .clickable {
+                cameraPermissionState.launchPermissionRequest()
+                navController.navigate("camera")
+            },
         shape = RoundedCornerShape(10.dp),
         backgroundColor =
         if (isSystemInDarkTheme()) {
