@@ -22,7 +22,7 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.navigation.NavController
 import com.example.swap.R
 import com.example.swap.objects.Response
-import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
+import com.example.swap.ui.layout.login.LoginViewModel
 import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
@@ -34,7 +34,7 @@ import com.skydoves.landscapist.glide.GlideImage
 @Composable
 fun ProfileScreen(
     navController: NavController,
-    authViewModel: AuthenticationViewModel,
+    loginViewModel: LoginViewModel,
     userViewModel: UserViewModel
 ) {
     val context = LocalContext.current
@@ -56,7 +56,7 @@ fun ProfileScreen(
             showToast(message = stringResource(R.string.profile_loading_error), context = context)
         }
         is Response.Success -> {
-            if (authViewModel.isUserAuthenticated()) {
+            if (loginViewModel.isUserAuthenticated()) {
                 if (response.data != null) {
                     val user = response.data
                     Column(

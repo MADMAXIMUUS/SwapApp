@@ -18,13 +18,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.swap.R
 import com.example.swap.domain.models.Advert
-import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
+import com.example.swap.ui.layout.login.LoginViewModel
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
 import com.example.swap.utilities.showToast
 
 @Composable
-fun DraftsScreen(navController: NavController, authViewModel: AuthenticationViewModel) {
+fun DraftsScreen(navController: NavController, loginViewModel: LoginViewModel) {
     val context = LocalContext.current
     val message = stringResource(id = R.string.profile_screen_message)
     HideKeyboard()
@@ -75,7 +75,7 @@ fun DraftsScreen(navController: NavController, authViewModel: AuthenticationView
         ) {
             Button(
                 onClick = {
-                    if (authViewModel.isUserAuthenticated())
+                    if (loginViewModel.isUserAuthenticated())
                         navController.navigate("new_advert")
                     else {
                         showToast(context = context, message = message)

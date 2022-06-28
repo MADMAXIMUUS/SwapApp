@@ -20,16 +20,21 @@
     <string name="email_title">Email</string>
     <string name="name_title">Name</string>
     <string name="already_have_account">Already have an account?</string>
-    <string name="log_in_title_2">Log In</string>
+    <string name="sign_up_to_sign_in_button">Log In</string>
     <string name="password_title">Password</string>
-    <string name="register_picture">Register picture</string>
-    <string name="log_in_picture">Login picture</string>
+    <string name="sign_up_picture">Sign Up picture</string>
+    <string name="sign_in_picture">Sign In picture</string>
+    <string name="forgot_picture">Forgot picture</string>
     <string name="log_in_title_3">Log In</string>
-    <string name="Sig_in_title">Sign In!</string>
+    <string name="sign_in_to_sign_up_button">Sign In!</string>
     <string name="dont_have_account">Don’t have an account?</string>
-    <string name="log_in_title_4">Log In</string>
+    <string name="sign_in_button">Log In</string>
     <string name="logging_error">An error occurred while logging into your account</string>
     <string name="creating_error">An error occurred while creating an account</string>
     <string name="profile_loading_error">Profile loading error</string>
     <string name="enter_title_hint">Title</string>
+    <string name="forgot_password_subtitle">Введите почту для восстановления пароля</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="forgot_button">Send</string>
+    <string name="sign_in_to_forgot_button">Забыли пароль?</string>
 </resources>

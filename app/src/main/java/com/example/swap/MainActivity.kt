@@ -3,7 +3,6 @@ package com.example.swap
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
@@ -11,10 +10,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -22,7 +18,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -42,31 +37,35 @@ import com.example.swap.presentation.draftscreen.new_advert.AdvertViewModel
 import com.example.swap.presentation.draftscreen.new_advert.NewAdvertScreen
 import com.example.swap.presentation.favoritescreen.FavoriteScreen
 import com.example.swap.presentation.homescreen.HomeScreen
-import com.example.swap.presentation.profilescreen.LogInScreen
 import com.example.swap.presentation.profilescreen.ProfileScreen
 import com.example.swap.presentation.profilescreen.SignInScreen
-import com.example.swap.presentation.profilescreen.viewmodels.AuthenticationViewModel
 import com.example.swap.presentation.profilescreen.viewmodels.UserViewModel
+import com.example.swap.ui.layout.ApplicationScreen
+import com.example.swap.ui.layout.login.LoginViewModel
+import com.example.swap.ui.layout.login.LogInScreen
 import com.example.swap.ui.theme.*
 import com.example.swap.utilities.HideKeyboard
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-            setKeepOnScreenCondition {
-                viewModel.isLoading.value
-            }
-        }
         setContent {
             HideKeyboard()
             SwapTheme {
-                LoadMainUi()
+                val systemUiController = rememberSystemUiController()
+                val darkTheme = isSystemInDarkTheme()
+                SideEffect {
+                    systemUiController.setSystemBarsColor(
+                        color = if (darkTheme) Dark_bottom_top_bar else White,
+                        darkIcons = !darkTheme
+                    )
+                }
+                ApplicationScreen()
+                //LoadMainUi()
             }
         }
     }
@@ -75,7 +74,7 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun LoadMainUi() {
     val navController = rememberNavController()
-    val authViewModel: AuthenticationViewModel = hiltViewModel()
+    val loginViewModel: LoginViewModel = hiltViewModel()
     val advertViewModel: AdvertViewModel = hiltViewModel()
     val userViewModel: UserViewModel = hiltViewModel()
     val mode = remember {
@@ -141,7 +140,7 @@ fun LoadMainUi() {
             Navigation(
                 navController = navController,
                 mode = gridMode.value,
-                authViewModel = authViewModel,
+                loginViewModel = loginViewModel,
                 advertViewModel = advertViewModel,
                 userViewModel = userViewModel
             )
@@ -190,7 +189,7 @@ fun LoadMainUi() {
 fun Navigation(
     mode: Boolean,
     navController: NavHostController,
-    authViewModel: AuthenticationViewModel,
+    loginViewModel: LoginViewModel,
     advertViewModel: AdvertViewModel,
     userViewModel: UserViewModel
 ) {
@@ -209,22 +208,22 @@ fun Navigation(
             FavoriteScreen(navController)
         }
         composable("drafts") {
-            DraftsScreen(navController, authViewModel)
+            DraftsScreen(navController, loginViewModel)
         }
         composable("chats") {
             ChatsScreen(navController)
         }
         composable("profile") {
-            ProfileScreen(navController, authViewModel, userViewModel)
+            ProfileScreen(navController, loginViewModel, userViewModel)
         }
         composable("new_advert") {
             NewAdvertScreen(navController, advertViewModel)
         }
         composable("signIn") {
-            SignInScreen(navController, authViewModel)
+            SignInScreen(navController, loginViewModel)
         }
         composable("logIn") {
-            LogInScreen(navController, authViewModel)
+            LogInScreen(navController, loginViewModel)
         }
         composable("camera") {
             CameraScreen(navController)
