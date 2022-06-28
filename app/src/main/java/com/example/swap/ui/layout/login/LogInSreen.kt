@@ -3,6 +3,7 @@ package com.example.swap.ui.layout.login
 import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -11,12 +12,15 @@ import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -35,7 +39,7 @@ import com.example.swap.utilities.HideKeyboard
 @Composable
 fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
     val viewState = loginViewModel.viewState.observeAsState(LoginViewState())
-    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
     HideKeyboard()
     with(viewState.value) {
         ConstraintLayout(
@@ -144,7 +148,13 @@ fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Email,
                                     capitalization = KeyboardCapitalization.None,
-                                    autoCorrect = true
+                                    autoCorrect = true,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext = {
+                                        focusManager.moveFocus(FocusDirection.Down)
+                                    }
                                 ),
                                 label = stringResource(id = R.string.email_title),
                                 onValueChange = {
@@ -161,7 +171,13 @@ fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Password,
                                     capitalization = KeyboardCapitalization.None,
-                                    autoCorrect = false
+                                    autoCorrect = false,
+                                    imeAction = ImeAction.Done
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                    }
                                 ),
                                 isSecureText = true,
                                 label = stringResource(id = R.string.password_title),
@@ -214,7 +230,13 @@ fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Text,
                                     capitalization = KeyboardCapitalization.Words,
-                                    autoCorrect = true
+                                    autoCorrect = true,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext = {
+                                        focusManager.moveFocus(FocusDirection.Down)
+                                    }
                                 ),
                                 onValueChange = {
                                     loginViewModel.obtainEvent(LoginEvent.NameChanged(it))
@@ -230,7 +252,13 @@ fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Email,
                                     capitalization = KeyboardCapitalization.None,
-                                    autoCorrect = true
+                                    autoCorrect = true,
+                                    imeAction = ImeAction.Next
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onNext = {
+                                        focusManager.moveFocus(FocusDirection.Down)
+                                    }
                                 ),
                                 label = stringResource(id = R.string.email_title),
                                 onValueChange = {
@@ -248,7 +276,13 @@ fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Password,
                                     capitalization = KeyboardCapitalization.None,
-                                    autoCorrect = false
+                                    autoCorrect = false,
+                                    imeAction = ImeAction.Done
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                    }
                                 ),
                                 label = stringResource(id = R.string.password_title),
                                 onValueChange = {
@@ -295,7 +329,13 @@ fun LogInScreen(navController: NavController, loginViewModel: LoginViewModel) {
                                 keyboardOptions = KeyboardOptions(
                                     keyboardType = KeyboardType.Email,
                                     capitalization = KeyboardCapitalization.None,
-                                    autoCorrect = true
+                                    autoCorrect = true,
+                                    imeAction = ImeAction.Done
+                                ),
+                                keyboardActions = KeyboardActions(
+                                    onDone = {
+                                        focusManager.clearFocus()
+                                    }
                                 ),
                                 label = stringResource(id = R.string.email_title),
                                 onValueChange = {

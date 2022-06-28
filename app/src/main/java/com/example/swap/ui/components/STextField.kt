@@ -2,6 +2,7 @@ package com.example.swap.ui.components
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -10,6 +11,7 @@ import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
@@ -26,6 +28,7 @@ fun STextField(
     isSingleLine: Boolean = false,
     value: String,
     label: String,
+    keyboardActions: KeyboardActions,
     isSecureText: Boolean = false,
     onValueChange: (String) -> Unit
 ) {
@@ -77,6 +80,7 @@ fun STextField(
             }
         ),
         keyboardOptions = keyboardOptions,
+        keyboardActions = keyboardActions,
         textStyle = MaterialTheme.typography.h2,
         singleLine = isSingleLine,
         onValueChange = onValueChange,
