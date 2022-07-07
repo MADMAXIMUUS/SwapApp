@@ -1,5 +1,6 @@
-package com.example.swap.presentation.chatscreen
 
+package com.example.swap.presentation.chatscreen
+/*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -24,9 +25,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.swap.R
-import com.example.swap.ui.theme.Deep_dark_blue
-import com.example.swap.ui.theme.Night_blue
-import com.example.swap.ui.theme.White
+import com.example.swap.core.presentation.ui.theme.Deep_dark_blue
+import com.example.swap.core.presentation.ui.theme.Night_blue
+import com.example.swap.core.presentation.ui.theme.White
 import com.example.swap.utilities.HideKeyboard
 
 @Composable
@@ -79,7 +80,9 @@ fun ChatItem(navController: NavController) {
                     .weight(0.7f)
             ) {
                 Text(
-                    text = "Исмаил"/*chat.companionId*/,
+                    text = "Исмаил"*/
+/*chat.companionId*//*
+,
                     style = MaterialTheme.typography.h2,
                     modifier = Modifier.offset(10.dp, 0.dp),
                     color = if (isSystemInDarkTheme()) {
@@ -139,3 +142,4 @@ fun ChatItem(navController: NavController) {
         }
     }
 }
+*/

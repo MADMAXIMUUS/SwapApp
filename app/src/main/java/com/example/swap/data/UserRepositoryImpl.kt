@@ -1,124 +1,65 @@
 package com.example.swap.data
 
-import com.example.swap.domain.models.User
+import com.example.swap.core.domain.models.User
+import com.example.swap.core.util.Resource
 import com.example.swap.domain.repositories.UserRepository
-import com.example.swap.objects.Constants.USER_COLLECTION
-import com.example.swap.objects.Constants.USER_DOCUMENT_EMAIL
-import com.example.swap.objects.Constants.USER_DOCUMENT_NAME
-import com.example.swap.objects.Constants.USER_DOCUMENT_PHONE
-import com.example.swap.objects.Response
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
-    private val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore,
+    private val auth: FirebaseAuth
 ) : UserRepository {
 
-    private var operationSuccessful = false
-
-    override fun getUserDetails(userId: String): Flow<Response<User>> = callbackFlow {
-        Response.Loading
+    override suspend fun getUserDetails(userId: String): Flow<Resource<User>> = callbackFlow {
+        /*Resource.Loading<User>(true)
         val snapShotListener =
             firebaseFirestore.collection(USER_COLLECTION).document(userId)
                 .addSnapshotListener { snapshot, error ->
                     val response = if (snapshot != null) {
                         val userInfo = snapshot.toObject(User::class.java)
-                        Response.Success(userInfo!!)
+                        Resource.Success(userInfo)
                     } else {
-                        Response.Error(error?.localizedMessage ?: error.toString())
+                        Resource.Error(error?.localizedMessage ?: error.toString())
                     }
                     trySend(response).isSuccess
                 }
         awaitClose {
             snapShotListener.remove()
-        }
+        }*/
     }
 
-    override fun setUserDetails(
+    override suspend fun firebaseLogOut(): Flow<Resource<Boolean>> = flow {
+        /*emit(Resource.Loading(true))
+        try {
+            auth.signOut()
+            emit(Resource.Success(true))
+        } catch (e: Exception) {
+            emit(Resource.Error(e.localizedMessage ?: "An Unexpected Error"))
+        }*/
+    }
+
+    override suspend fun setUserDetails(
         userId: String,
         name: String,
         email: String,
         phone: String
-    ): Flow<Response<Boolean>> = flow {
-        operationSuccessful = false
-        try {
+    ): Flow<Resource<Void?>> = flow {
+        /*try {
             val userObj = mutableMapOf<String, Any>()
             userObj[USER_DOCUMENT_NAME] = name
             userObj[USER_DOCUMENT_EMAIL] = email
             userObj[USER_DOCUMENT_PHONE] = phone
-            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
-                .addOnSuccessListener {
-
-                }.await()
-            if (operationSuccessful){
-                emit(Response.Success(operationSuccessful))
-            }else{
-                emit(Response.Error("Error when saving changes"))
-            }
+            val addition =
+                firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
+                    .await()
+            emit(Resource.Success(addition))
         } catch (e: Exception) {
-            Response.Error(e.localizedMessage ?: "An Unexpected Error")
-        }
-    }
-
-    override fun setUserName(userId: String, userName: String): Flow<Response<Boolean>> = flow{
-        operationSuccessful = false
-        try {
-            val userObj = mutableMapOf<String, Any>()
-            userObj[USER_DOCUMENT_NAME] = userName
-            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
-                .addOnSuccessListener {
-
-                }.await()
-            if (operationSuccessful){
-                emit(Response.Success(operationSuccessful))
-            }else{
-                emit(Response.Error("Error when saving changes"))
-            }
-        } catch (e: Exception) {
-            Response.Error(e.localizedMessage ?: "An Unexpected Error")
-        }
-    }
-
-    override fun setUserEmail(userId: String, email: String): Flow<Response<Boolean>> = flow{
-        operationSuccessful = false
-        try {
-            val userObj = mutableMapOf<String, Any>()
-            userObj[USER_DOCUMENT_EMAIL] = email
-            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
-                .addOnSuccessListener {
-
-                }.await()
-            if (operationSuccessful){
-                emit(Response.Success(operationSuccessful))
-            }else{
-                emit(Response.Error("Error when saving changes"))
-            }
-        } catch (e: Exception) {
-            Response.Error(e.localizedMessage ?: "An Unexpected Error")
-        }
-    }
-
-    override fun setUserPhone(userId: String, phone: String): Flow<Response<Boolean>> = flow{
-        operationSuccessful = false
-        try {
-            val userObj = mutableMapOf<String, Any>()
-            userObj[USER_DOCUMENT_PHONE] = phone
-            firebaseFirestore.collection(USER_COLLECTION).document(userId).update(userObj)
-                .addOnSuccessListener {
-
-                }.await()
-            if (operationSuccessful){
-                emit(Response.Success(operationSuccessful))
-            }else{
-                emit(Response.Error("Error when saving changes"))
-            }
-        } catch (e: Exception) {
-            Response.Error(e.localizedMessage ?: "An Unexpected Error")
-        }
+            Resource.Error<Void?>(e.localizedMessage ?: "An Unexpected Error")
+        }*/
     }
 }

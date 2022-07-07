@@ -1,23 +1,19 @@
 package com.example.swap.domain.repositories
 
-import com.example.swap.domain.models.User
-import com.example.swap.objects.Response
+import com.example.swap.core.domain.models.User
+import com.example.swap.core.util.Resource
 import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    fun getUserDetails(userId: String): Flow<Response<User>>
+    suspend fun getUserDetails(userId: String): Flow<Resource<User>>
 
-    fun setUserDetails(
+    suspend fun firebaseLogOut(): Flow<Resource<Boolean>>
+
+    suspend fun setUserDetails(
         userId: String,
         name: String,
         email: String,
         phone: String
-    ): Flow<Response<Boolean>>
-
-    fun setUserName(userId: String, userName: String): Flow<Response<Boolean>>
-
-    fun setUserEmail(userId: String, email: String): Flow<Response<Boolean>>
-
-    fun setUserPhone(userId: String, phone: String): Flow<Response<Boolean>>
+    ): Flow<Resource<Void?>>
 }

@@ -1,7 +1,7 @@
 <resources>
     <string name="bottom_menu_home">Главная</string>
     <string name="bottom_menu_favorite">Избранное</string>
-    <string name="bottom_menu_adverts">Объявления</string>
+    <string name="bottom_menu_drafts">Объявления</string>
     <string name="bottom_menu_chats">Чаты</string>
     <string name="bottom_menu_profile">Профиль</string>
     <string name="dont_have_drafts_message">У вас нет объявлений в черновиках</string>
@@ -29,7 +29,19 @@
     <string name="dont_have_account">Еще нет аккаунта?</string>
     <string name="sign_in_button">Войти</string>
     <string name="logging_error">Произошла ошибка при входе в аккаунт</string>
-    <string name="creating_error">An error occurred while creating an account</string>
+    <string name="creating_error">Произошла ошибка при создании аккаунта</string>
     <string name="profile_loading_error">Ошибка загрузки профиля</string>
     <string name="enter_title_hint">Название</string>
+    <string name="forgot_password_subtitle">Введите почту для восстановления пароля</string>
+    <string name="sign_up_button">Регистрация</string>
+    <string name="forgot_button">Отправить</string>
+    <string name="sign_in_to_forgot_button">Забыли пароль?</string>
+    <string name="error_unknown">Неизвестная ошибка</string>
+    <string name="password_visible_content_description">Скрыть пароль</string>
+    <string name="password_hidden_content_description">Показать пароль</string>
+    <string name="registration_completed_successfully">Регистрация прошла успешно</string>
+    <string name="error_field_empty">Это поле не может быть пустым</string>
+    <string name="not_a_valid_email">Некоректный email</string>
+    <string name="input_too_short">Минимальная длина - %d</string>
+    <string name="invalid_password">Пароль должен содержать как минимум одну заглавную букву и одну цифру.</string>
 </resources>

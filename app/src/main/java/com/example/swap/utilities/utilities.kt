@@ -2,6 +2,8 @@ package com.example.swap.utilities
 
 import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.lazy.GridCells
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -37,3 +39,9 @@ fun getDirectory(context: Context): File {
     return  if (mediaDir != null && mediaDir.exists())
         mediaDir else context.filesDir
 }
+
+/*
+@OptIn(ExperimentalFoundationApi::class)
+fun getGridSize(text: String): GridCells{
+
+}*/

@@ -1,10 +1,10 @@
 package com.example.swap.domain.repositories
 
-import com.example.swap.domain.models.Tag
-import com.example.swap.objects.Response
+import com.example.swap.core.util.Resource
+import com.example.swap.core.domain.models.Tag
 import kotlinx.coroutines.flow.Flow
 
 interface TagRepository {
-    fun getAllTags(): Flow<Response<List<Tag>>>
-    fun addTag(text: String): Flow<Response<Boolean>>
+    fun getAllTags(): Flow<Resource<List<Tag>>>
+    suspend fun addTag(text: String): Flow<Resource<Void?>>
 }

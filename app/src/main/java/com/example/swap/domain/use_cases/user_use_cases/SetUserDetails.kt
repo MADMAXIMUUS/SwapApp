@@ -6,6 +6,6 @@ import javax.inject.Inject
 class SetUserDetails @Inject constructor(
     private val repository: UserRepository
 ) {
-    operator fun invoke(userId: String, name: String, email: String, phone: String) =
+    suspend operator fun invoke(userId: String, name: String, email: String, phone: String) =
         repository.setUserDetails(userId, name, email, phone)
 }
