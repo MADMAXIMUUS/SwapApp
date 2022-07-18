@@ -10,7 +10,7 @@ import com.google.accompanist.permissions.PermissionState
 @Composable
 fun NewAdvertScreen(
     navController: NavController,
-    advertViewModel: AdvertViewModel
+    newAdvertViewModel: NewAdvertViewModel
 ) {
    /* HideKeyboard()
     val advertTitle = remember { mutableStateOf("") }

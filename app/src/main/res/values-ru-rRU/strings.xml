@@ -44,4 +44,5 @@
     <string name="not_a_valid_email">Некоректный email</string>
     <string name="input_too_short">Минимальная длина - %d</string>
     <string name="invalid_password">Пароль должен содержать как минимум одну заглавную букву и одну цифру.</string>
+    <string name="splash_text">It\'s time to swap</string>
 </resources>

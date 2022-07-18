@@ -8,15 +8,32 @@
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable-v24/change_password.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable-v24/ic_splash_screen.xml" value="0.142" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/avd_anim.xml" value="0.174" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/change_password.xml" value="0.142" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/data.xml" value="0.1785" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/forgot_night.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_add.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_error.xml" value="0.1715" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_new_launcher_foreground.xml" value="0.142" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_open_eye.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_owl_search.xml" value="0.1785" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_rating_color.xml" value="0.1785" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_splash.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/ic_splash_icon.xml" value="0.13" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/news.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/news_avd_v02.xml" value="0.16" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/signin.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/signin_night.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/signup.xml" value="0.142" />
         <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/signup_night.xml" value="0.142" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/splash.xml" value="0.16" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/splash1.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/splash_anim.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/splash_icon.xml" value="0.1785" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/splashicon.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/drawable/test_avd.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.174" />
+        <entry key="..\:/MAI/SwapApp/app/src/main/res/mipmap-anydpi-v26/ic_new_launcher_round.xml" value="0.13" />
       </map>
     </option>
   </component>

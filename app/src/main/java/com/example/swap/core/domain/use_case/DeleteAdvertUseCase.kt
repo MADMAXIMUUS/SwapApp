@@ -7,6 +7,6 @@ class DeleteAdvertUseCase(
 ) {
 
     suspend operator fun invoke(advertId: String)/*: SimpleResource*/ {
-        return repository.deleteAdvert(advertId)
+        //return repository.deleteAdvert(advertId)
     }
 }

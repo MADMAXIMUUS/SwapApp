@@ -1,12 +1,12 @@
 package com.example.swap.di
 
 import com.example.swap.feature_advert.data.AdvertRepositoryImpl
-import com.example.swap.data.TagRepositoryImpl
+import com.example.swap.feature_advert.data.repository.TagRepositoryImpl
 import com.example.swap.feature_advert.domain.repository.AdvertRepository
 import com.example.swap.domain.repositories.TagRepository
-import com.example.swap.domain.use_cases.advert_use_cases.*
-import com.example.swap.feature_advert.domain.use_case.tag.AddTag
-import com.example.swap.feature_advert.domain.use_case.tag.GetAllTags
+import com.example.swap.feature_advert.domain.use_case.advert.*
+import com.example.swap.feature_advert.domain.use_case.tag.AddTagUseCase
+import com.example.swap.feature_advert.domain.use_case.tag.GetAllTagsUseCase
 import com.example.swap.feature_advert.domain.use_case.tag.TagUseCases
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -29,11 +29,15 @@ object AdvertModule {
     @Provides
     fun provideAdvertUseCases(advertRepository: AdvertRepository): AdvertUseCases {
         return AdvertUseCases(
-            GetAllAdverts(advertRepository),
+            GetAllAdvertsUseCase(advertRepository),
             GetAllAdvertsFromUser(advertRepository),
-            GetOneAdvert(advertRepository),
-            CreateAdvert(advertRepository),
-            UpdateAdvert(advertRepository)
+            GetAdvertDetailsUseCase(advertRepository),
+            CreateAdvertUseCase(advertRepository),
+            UpdateAdvertUseCase(advertRepository),
+            DeleteAdvertUseCase(advertRepository),
+            AddAdvertToFavoriteUseCase(advertRepository),
+            RemoveAdvertFromFavoriteUseCase(advertRepository),
+            GetAdvertsFavorite(advertRepository)
         )
     }
 
@@ -47,8 +51,8 @@ object AdvertModule {
     @Provides
     fun provideTagUseCases(tagRepository: TagRepository): TagUseCases {
         return TagUseCases(
-            GetAllTags(tagRepository),
-            AddTag(tagRepository)
+            GetAllTagsUseCase(tagRepository),
+            AddTagUseCase(tagRepository)
         )
     }
 }

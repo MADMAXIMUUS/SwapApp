@@ -1,6 +1,6 @@
 package com.example.swap.feature_advert.domain.use_case.advert
 
-import com.example.swap.feature_advert.domain.repository.AdvertRepository
+import com.example.swap.feature_advert.domain.AdvertRepository
 import javax.inject.Inject
 
 class UpdateAdvertUseCase @Inject constructor(

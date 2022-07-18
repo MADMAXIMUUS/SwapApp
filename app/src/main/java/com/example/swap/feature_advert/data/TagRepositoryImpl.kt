@@ -1,4 +1,4 @@
-package com.example.swap.data
+package com.example.swap.feature_advert.data
 
 import com.example.swap.core.util.Resource
 import com.example.swap.core.domain.models.Tag

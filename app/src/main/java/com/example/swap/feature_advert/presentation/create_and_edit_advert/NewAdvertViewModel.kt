@@ -1,13 +1,13 @@
 package com.example.swap.feature_advert.presentation.create_and_edit_advert
 
 import androidx.lifecycle.ViewModel
-import com.example.swap.domain.use_cases.advert_use_cases.AdvertUseCases
+import com.example.swap.feature_advert.domain.use_case.advert.AdvertUseCases
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class AdvertViewModel @Inject constructor(
+class NewAdvertViewModel @Inject constructor(
     private val auth: FirebaseAuth,
     private val advertUseCases: AdvertUseCases
 ) : ViewModel() {

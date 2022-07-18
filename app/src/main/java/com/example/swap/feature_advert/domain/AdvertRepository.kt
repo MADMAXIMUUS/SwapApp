@@ -1,4 +1,4 @@
-package com.example.swap.feature_advert.domain.repository
+package com.example.swap.feature_advert.domain
 
 import com.example.swap.core.domain.models.Advert
 import com.example.swap.core.util.Resource
@@ -6,11 +6,17 @@ import com.example.swap.core.util.SimpleResource
 
 interface AdvertRepository {
 
-    fun getAllAdverts(userId: String): Resource<List<Advert>>
+    suspend fun getAdvertsFavorite(userId: String): Resource<List<Advert>>
 
-    fun getAllAdvertsFromUser(userId: String): Resource<List<Advert>>
+    suspend fun getAllAdverts(userId: String, firstNumber: Long, limit: Long): Resource<List<Advert>>
 
-    suspend fun getOneAdvert(advertId: String): Resource<Advert>
+    suspend fun getAdvertsFromUser(
+        userId: String,
+        firstNumber: Long,
+        limit: Long
+    ): Resource<List<Advert>>
+
+    suspend fun getAdvertDetails(advertId: String): Resource<Advert>
 
     suspend fun createAdvert(
         title: String,
@@ -19,6 +25,10 @@ interface AdvertRepository {
         authorId: String,
         images: List<String>
     ): SimpleResource
+
+    suspend fun addAdvertToFavorite(advertId: String): SimpleResource
+
+    suspend fun removeAdvertFromFavorite(advertId: String): SimpleResource
 
     suspend fun updateAdvert(
         advertId: String,

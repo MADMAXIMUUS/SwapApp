@@ -1,8 +1,13 @@
 package com.example.swap.core.presentation
 
+import android.animation.ObjectAnimator
+import android.os.Build
 import android.os.Bundle
+import android.view.View
+import android.view.animation.AnticipateInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Surface
@@ -12,6 +17,8 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -24,11 +31,27 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            installSplashScreen()
+            splashScreen.setOnExitAnimationListener { splashScreenView ->
+                val slideUp = ObjectAnimator.ofFloat(
+                    splashScreenView,
+                    View.TRANSLATION_Y,
+                    0f,
+                    -splashScreenView.height.toFloat()
+                )
+                slideUp.interpolator = AnticipateInterpolator()
+                slideUp.duration = 200L
+                slideUp.doOnEnd { splashScreenView.remove() }
+                slideUp.start()
+            }
+        }
         setContent {
             SwapTheme {
                 Surface(
@@ -60,8 +83,9 @@ class MainActivity : ComponentActivity() {
             Screen.ChatsListScreen.route,
             Screen.ProfileScreen.route
         )
-        val isOwnProfile = backStackEntry?.destination?.route == "${Screen.ProfileScreen.route}?userId={userId}" &&
-                backStackEntry.arguments?.getString("userId") == null
+        val isOwnProfile =
+            backStackEntry?.destination?.route == "${Screen.ProfileScreen.route}?userId={userId}" &&
+                    backStackEntry.arguments?.getString("userId") == null
         return doesRouteMatch || isOwnProfile
     }
 }

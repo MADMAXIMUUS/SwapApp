@@ -1,12 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Swap.Splash" parent="android:Theme.Material.Light.NoActionBar">
+    <style name="Theme.Swap.Splash" parent="Theme.SplashScreen">
         <item name="android:statusBarColor">#FFFFFFFF</item>
         <item name="android:navigationBarColor">#FFFFFFFF</item>
         <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowSplashScreenBackground">#FFFFFFFF</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_transparent</item>
+        <item name="android:windowSplashScreenAnimationDuration">1500</item>
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/splash_anim</item>
         <item name="postSplashScreenTheme">@style/Theme.Swap</item>
     </style>
+
+    <style name="Theme.Swap" parent="android:Theme.Material.Light.NoActionBar">
+        <item name="android:statusBarColor">#FFFFFFFF</item>
+        <item name="android:navigationBarColor">#FFFFFFFF</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+
 </resources>

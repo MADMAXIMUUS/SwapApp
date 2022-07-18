@@ -1,5 +1,10 @@
+@file:OptIn(ExperimentalAnimationGraphicsApi::class)
+
 package com.example.swap.core.presentation.components
 
+import android.os.Build
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.ExperimentalMaterialApi
@@ -18,6 +23,7 @@ import com.example.swap.feature_auth.presentation.splash.SplashScreen
 
 @ExperimentalComposeUiApi
 @ExperimentalMaterialApi
+@ExperimentalAnimationApi
 @Composable
 fun Navigation(
     navController: NavHostController,
@@ -25,7 +31,10 @@ fun Navigation(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Screen.SplashScreen.route,
+        startDestination = if (Build.VERSION.SDK_INT < 31)
+            Screen.SplashScreen.route
+        else
+            Screen.HomeScreen.route,
         modifier = Modifier
             .fillMaxSize()
             .background(color = SwapTheme.colors.primaryBackgroundColor)

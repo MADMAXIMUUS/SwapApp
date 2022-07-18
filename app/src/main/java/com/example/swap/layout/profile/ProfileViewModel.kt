@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.swap.common.EventHandler
 import com.example.swap.core.domain.models.User
-import com.example.swap.domain.use_cases.advert_use_cases.AdvertUseCases
 import com.example.swap.domain.use_cases.user_use_cases.UserUseCases
 import com.example.swap.layout.profile.models.ProfileEvent
 import com.example.swap.layout.profile.models.ProfileViewState
@@ -16,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val userUseCases: UserUseCases,
-    private val advertUseCases: AdvertUseCases
+    private val userUseCases: UserUseCases
 ) : ViewModel(), EventHandler<ProfileEvent> {
 
     private val _profileViewState: MutableStateFlow<ProfileViewState> =

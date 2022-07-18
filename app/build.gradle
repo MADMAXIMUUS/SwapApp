@@ -72,6 +72,8 @@ dependencies {
     implementation 'androidx.paging:paging-compose:1.0.0-alpha15'
     implementation "androidx.activity:activity-compose:1.6.0-alpha05"
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha03"
+    implementation "androidx.compose.animation:animation:$compose_version"
+    implementation "androidx.compose.animation:animation-graphics:$compose_version"
 
     // Timber
     implementation 'com.jakewharton.timber:timber:5.0.1'
@@ -92,7 +94,7 @@ dependencies {
 
     //Firebase
     implementation 'com.google.firebase:firebase-auth:21.0.6'
-    implementation 'com.google.firebase:firebase-firestore:24.2.0'
+    implementation 'com.google.firebase:firebase-firestore:24.2.1'
     implementation 'com.google.firebase:firebase-storage:20.0.1'
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.1'
 
@@ -113,5 +115,10 @@ dependencies {
 
     //Accompanist
     implementation 'com.google.accompanist:accompanist-permissions:0.19.0'
-    implementation 'com.google.accompanist:accompanist-systemuicontroller:0.18.0'
+    implementation 'com.google.accompanist:accompanist-navigation-animation:0.16.0'
+
+    //Coil
+    implementation 'io.coil-kt:coil:2.1.0'
+    implementation 'io.coil-kt:coil-gif:2.1.0'
+    implementation 'io.coil-kt:coil-compose:2.1.0'
 }

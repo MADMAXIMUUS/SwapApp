@@ -1,27 +1,99 @@
 package com.example.swap.feature_advert.data
 
 import com.example.swap.core.domain.models.Advert
+import com.example.swap.core.util.Constants.ADVERT_COLLECTION
+import com.example.swap.core.util.Constants.ADVERT_DOCUMENT_AUTHOR_ID
+import com.example.swap.core.util.Constants.ADVERT_DOCUMENT_CREATED_AT
 import com.example.swap.core.util.Resource
 import com.example.swap.core.util.SimpleResource
-import com.example.swap.feature_advert.domain.repository.AdvertRepository
+import com.example.swap.core.util.UiText
+import com.example.swap.feature_advert.domain.AdvertRepository
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import javax.inject.Inject
 
 class AdvertRepositoryImpl @Inject constructor(
     private val firebaseFirestore: FirebaseFirestore
 ) : AdvertRepository {
 
-    private var operationSuccessful = false
-    override fun getAllAdverts(userId: String): Resource<List<Advert>> {
-
+    override suspend fun getAdvertsFavorite(userId: String): Resource<List<Advert>> {
+        return try {
+            var response = Resource.Success(emptyList<Advert>())
+            firebaseFirestore.collection(ADVERT_COLLECTION)
+                .whereNotEqualTo(ADVERT_DOCUMENT_AUTHOR_ID, userId)
+                .orderBy(ADVERT_DOCUMENT_CREATED_AT, Query.Direction.DESCENDING)
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot != null) {
+                        val advertsList = snapshot.toObjects(Advert::class.java)
+                        response = Resource.Success(advertsList)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Resource.Error<List<Advert>>(UiText.DynamicString(e.message ?: e.toString()))
+                }
+            return response
+        } catch (e: Exception) {
+            Resource.Error(UiText.unknownError())
+        }
     }
 
-    override fun getAllAdvertsFromUser(userId: String): Resource<List<Advert>> {
-
+    override suspend fun getAllAdverts(
+        userId: String,
+        firstNumber: Int,
+        limit: Long
+    ): Resource<List<Advert>> {
+        return try {
+            var response = Resource.Success(emptyList<Advert>())
+            firebaseFirestore.collection(ADVERT_COLLECTION)
+                .whereNotEqualTo(ADVERT_DOCUMENT_AUTHOR_ID, userId)
+                .orderBy(ADVERT_DOCUMENT_CREATED_AT, Query.Direction.DESCENDING)
+                .limit(limit)
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot != null) {
+                        val advertsList = snapshot.toObjects(Advert::class.java)
+                        response = Resource.Success(advertsList)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Resource.Error<List<Advert>>(UiText.DynamicString(e.message ?: e.toString()))
+                }
+            return response
+        } catch (e: Exception) {
+            Resource.Error(UiText.unknownError())
+        }
     }
 
-    override suspend fun getOneAdvert(advertId: String): Resource<Advert> {
+    override suspend fun getAdvertsFromUser(
+        userId: String,
+        firstNumber: Int,
+        limit: Long
+    ): Resource<List<Advert>> {
+        return try {
+            var response = Resource.Success(emptyList<Advert>())
+            firebaseFirestore.collection(ADVERT_COLLECTION)
+                .whereEqualTo(ADVERT_DOCUMENT_AUTHOR_ID, userId)
+                .orderBy(ADVERT_DOCUMENT_CREATED_AT, Query.Direction.DESCENDING)
+                .limit(limit)
+                .get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot != null) {
+                        val advertsList = snapshot.toObjects(Advert::class.java)
+                        response = Resource.Success(advertsList)
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Resource.Error<List<Advert>>(UiText.DynamicString(e.message ?: e.toString()))
+                }
+            return response
+        } catch (e: Exception) {
+            Resource.Error(UiText.unknownError())
+        }
+    }
 
+    override suspend fun getAdvertDetails(advertId: String): Resource<Advert> {
+        return Resource.Success(Advert())
     }
 
     override suspend fun createAdvert(
@@ -31,7 +103,15 @@ class AdvertRepositoryImpl @Inject constructor(
         authorId: String,
         images: List<String>
     ): SimpleResource {
+        return Resource.Success(Unit)
+    }
 
+    override suspend fun addAdvertToFavorite(advertId: String): SimpleResource {
+        return Resource.Success(Unit)
+    }
+
+    override suspend fun removeAdvertFromFavorite(advertId: String): SimpleResource {
+        return Resource.Success(Unit)
     }
 
     override suspend fun updateAdvert(
@@ -41,11 +121,11 @@ class AdvertRepositoryImpl @Inject constructor(
         images: List<String>,
         description: String
     ): SimpleResource {
-
+        return Resource.Success(Unit)
     }
 
     override suspend fun deleteAdvert(advertId: String): SimpleResource {
-
+        return Resource.Success(Unit)
     }
 
     /*override fun getAllAdverts(userId: String) *//*: Flow<Resource<List<Advert>>> = callbackFlow*//* {
